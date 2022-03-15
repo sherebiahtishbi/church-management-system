@@ -6,45 +6,35 @@ import profileImage from "../../images/anu_profile.jpg"
 import EducationInfo from '../common/EducationInfo'
 import EmploymentInfo from '../common/EmploymentInfo'
 import GraceStepper from '../common/GraceStepper'
+import { objectPerson } from '../../dataobjects/objectPerson'
+import { ChevronLeft, ChevronRight, KeyboardReturn } from '@mui/icons-material'
+import axios from 'axios'
 
-const images = require.context('../../images', true);
+// const images = require.context('../../images', true);
 
 function Pastor() {
-  const [formData, setFormData] = useState({
-    firstname: "Sherebiah",
-    lastname: "Tisbi",
-    gender: "",
-    birthdate: "2005-08-23",
-    nationalid: "",
-    idtype: "",
-    maritalstatus: "",
-    marriagedt: new Date(),
-    address1: "37, Washington Square Circle",
-    address2: "",
-    phone1: "",
-    phone2: "",
-    email: "",
-    profileimage: "anu_profile.jpg",
-    degree: "",
-    school: "Gujarat University",
-    degreetype: "",
-    degreedoc: new Date(),
-    joindate: new Date(),
-    retiredate: new Date(),
-    compensation: 0,
-  })
-
+  const [formData, setFormData] = useState(objectPerson)
   const [step, setStep] = useState(0)
+  const entrysteps = ['Personal Info', 'Address Info', 'Educational Info', 'Employment Info']
+  
+  const createPerson = async () => {
+    console.log(formData)
+    console.log("About to post data!")
+    try {
+      const res = await axios.post("http://localhost:7501/persons/save", formData)
+      console.log(res)
+    } catch (err){
+      console.log(err.errors) 
+    }
+  }
 
-  // console.log(formData)
-  const entrysteps = ['Personal Info','Address Info','Educational Info','Employment Info']
   return (
     <div>
       <Typography variant="h6" sx={{ color: 'GrayText', pb:2 }}>Pastor</Typography>
       <GraceStepper steps={entrysteps} activeStep={step}/>
       <Box mt={3} pb={4}>
-        <Grid container spacing={1}>
-          <Grid container xs={12} md={2} xl={2} justifyContent="center" alignItems="center" display={'flex'}>
+        <Grid container spacing={.25}>
+          <Grid container xs={12} sm={12} md={2} xl={2} justifyContent="center" alignItems="center" display={'flex'}>
             <Avatar alt="Anugrah Tisbi" src={profileImage} 
               sx={{ xs: 12, width:'80%', height:'auto', boxShadow: 10}} />     
               {!formData.profileimage ?
@@ -61,12 +51,31 @@ function Pastor() {
             </Box>
             <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
               <Stack spacing={2} direction="row">
-                <Button variant="contained" onClick={() => {
+                <Button
+                  variant="contained"
+                  size='large'
+                  startIcon={<ChevronLeft />}
+                  onClick={() => {
                     step !== 0 ? setStep(step-1) : setStep(0)
-                  }} disabled={step===0}>Previous</Button>
-                <Button variant="contained" onClick={() => {
+                  }}
+                  disabled={step === 0}>Previous
+                </Button>
+                <Button
+                  variant="contained"
+                  size='large'
+                  startIcon={<KeyboardReturn />}
+                  onClick={createPerson}
+                  disabled={step !== 3}>Submit
+                </Button>
+                <Button
+                  variant="contained"
+                  size='large'
+                  endIcon={<ChevronRight />}
+                  onClick={() => {
                   step !== 3 ? setStep(step+1) : setStep(step)
-                }} disabled={step === 3}>Next</Button>
+                  }}
+                  disabled={step === 3}>Next
+                </Button>
               </Stack>
             </Box>            
           </Grid>

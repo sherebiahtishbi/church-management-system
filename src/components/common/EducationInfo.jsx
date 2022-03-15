@@ -1,58 +1,87 @@
-import { Box, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
+import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material"
 
 function EducationInfo(props) {
     return (
         <Box mt={2}>
             {props.showheader && <Typography variant="h5" pb={2}>{props.title ? props.title : "Educational Info" }</Typography>}
-            <div>
-                <TextField
-                    fullWidth
-                    id="degree"
-                    value={props.formdata.degree}
-                    onChange={(e)=>props.updater({...props.formdata, degreee:e.target.value})}
-                    label="Degree"
-                    variant="outlined"
-                    sx={{ mt: 1 }} />
-                <TextField
-                    fullWidth
-                    id="school"
-                    value={props.formdata.school}
-                    onChange={(e)=>props.updater({...props.formdata, school:e.target.value})}
-                    label="School/College/University"
-                    variant="outlined"
-                    sx={{ mt: 2}} />
-            {/* </div> */}
-            {/* <div> */}
-                <FormControl sx={{ mt: 2, width: 225 }}>
-                    <InputLabel id="lbl-degree">Degree Type</InputLabel>
-                    <Select
-                        labelId="lbl-degree"
-                        id="select-degreetype"
-                        value={props.formdata.degreetype}
-                        onChange={(e)=>props.updater({...props.formdata, degreetype:e.target.value})}
-                        label="Type of Degree"
-                    >
-                        <MenuItem value="M">Masters</MenuItem>
-                        <MenuItem value="F">Bachelors</MenuItem>
-                        <MenuItem value="F">Associate</MenuItem>
-                        <MenuItem value="F">Diploma</MenuItem>
-                        <MenuItem value="F">Certificate</MenuItem>
-                    </Select>
-                </FormControl>  
-                <FormControl sx={{ mt: 2, ml: { xl: 1 }}}>
+            <Grid container rowSpacing={2} columnSpacing={4} >
+                <Grid item xs={12} sm={6}>
                     <TextField
+                        fullWidth
+                        id="degree"
+                        value={props.formdata.education.degree}
+                        onChange={(e) => props.updater({
+                            ...props.formdata,
+                            education: {
+                                ...props.formdata.education,
+                                degree: e.target.value
+                            }
+                        })}
+                        label="Degree"
+                        variant="standard"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        fullWidth
+                        id="school"
+                        value={props.formdata.education.school}
+                        onChange={(e) => props.updater({
+                            ...props.formdata,
+                            education: {
+                                ...props.formdata.education,
+                                school: e.target.value
+                            }
+                        })}
+                        label="School/College/University"
+                        variant="standard"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <TextField
+                        fullWidth
+                        id="outlined-select-degreetype"
+                        select
+                        label="Degree Type"
+                        variant="standard"                        
+                        value={props.formdata.education.degreetype}
+                        onChange={(e) => props.updater({
+                            ...props.formdata,
+                            education: {
+                                ...props.formdata.education,
+                                degreetype: e.target.value
+                            }
+                        })}
+                        >
+                        <MenuItem value="MST">Masters</MenuItem>
+                        <MenuItem value="BCH">Bachelors</MenuItem>
+                        <MenuItem value="ASO">Associate</MenuItem>
+                        <MenuItem value="DIP">Diploma</MenuItem>
+                        <MenuItem value="CER">Certificate</MenuItem>
+                    </TextField>
+                </Grid>                
+                <Grid item xs={12} sm={3}>
+                    <TextField
+                        fullWidth
                         id="dt-pass"
                         label="Date of Completion"
+                        variant="standard"                        
                         type="date"
                         defaultValue={()=>{new Date()}}
-                        value={props.formdata.degreedoc}
-                        onChange={(e)=>props.updater({...props.formdata, degreedoc:e.target.value})}
+                        value={props.formdata.education.completiondate}
+                        onChange={(e) => props.updater({
+                            ...props.formdata,
+                            education: {
+                                ...props.formdata.education,
+                                completiondate: e.target.value
+                            }
+                        })}
                         InputLabelProps={{
                             shrink: true,
                         }}
                     />
-                </FormControl>  
-            </div>
+                </Grid>  
+            </Grid>
         </Box>
     )
 }
