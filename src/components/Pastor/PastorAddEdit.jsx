@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material"
+import { Avatar, Box, Button, Grid, Typography } from "@mui/material"
 import Personalnfo from "../common/Personalnfo"
 import AddressInfo from "../common/AddressInfo"
 import profileImage from "../../images/anu_profile.jpg"
@@ -12,7 +12,7 @@ import axios from 'axios'
 
 // const images = require.context('../../images', true);
 
-function Pastor() {
+function PastorAddEdit() {
   const [formData, setFormData] = useState(objectPerson)
   const [step, setStep] = useState(0)
   const entrysteps = ['Personal Info', 'Address Info', 'Educational Info', 'Employment Info']
@@ -42,15 +42,16 @@ function Pastor() {
                 <Typography sx={{ xs:12 }}>Change Photo</Typography>
               }
           </Grid>
-          <Grid item xs={12} sm={12} md={10} xl={10} mt={2}>
-            <Box sx={{height:{xl:400}, flexGrow:1}}>
+          <Grid item xs={12} sm={12} md={10} xl={10} mt={2} height={400}>
+            <Box>
+            {/* <Box sx={{height:{xl:400}, flexGrow:1}}> */}
               {step === 0 && <Personalnfo showheader formdata={formData} updater={setFormData} />}
               {step === 1 && <AddressInfo showheader formdata={formData} updater={setFormData} />}
               {step === 2 && <EducationInfo showheader formdata={formData} updater={setFormData} />}
               {step === 3 && <EmploymentInfo showheader formdata={formData} updater={setFormData} />}     
             </Box>
-            <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
-              <Stack spacing={2} direction="row">
+            <Box display="flex" justifyContent="space-between" alignItems="flex-start" py={4}>
+              {/* <Stack spacing={2} direction="row" justifyContent="space-between" alignItems="center"> */}
                 <Button
                   variant="contained"
                   size='large'
@@ -76,7 +77,7 @@ function Pastor() {
                   }}
                   disabled={step === 3}>Next
                 </Button>
-              </Stack>
+              {/* </Stack> */}
             </Box>            
           </Grid>
 
@@ -86,4 +87,4 @@ function Pastor() {
   )
 }
 
-export default Pastor
+export default PastorAddEdit

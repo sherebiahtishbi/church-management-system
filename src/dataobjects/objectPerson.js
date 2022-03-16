@@ -1,4 +1,5 @@
 export const objectPerson = {
+    persontype:"pastor",
     firstname: "Sherebiah",
     lastname: "Tisbi",
     gender: "",

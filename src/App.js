@@ -6,7 +6,8 @@ import Churches from './pages/Churches';
 import Navbar from './components/Navbar';
 import profileImage from './images/anu_profile.jpg'
 import Church from './pages/Church';
-import Pastor from './components/Pastor/Pastor';
+import PastorAddEdit from './components/Pastor/PastorAddEdit';
+import Pastorlist from './components/Pastor/Pastorlist';
 import Members from './components/Church/Members'
 import Donations from './components/Church/Donations'
 import Documents from './components/Church/Documents';
@@ -23,7 +24,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/churches" element={<Churches />} />
           <Route path="/church" element={<Church />}>
-            <Route path="pastor" element={<Pastor />} />
+            <Route path="pastor" element={<Pastorlist />} />
+            <Route path="pastor/add" element={<PastorAddEdit />} />
             <Route path="members" element={<Members />} />
             <Route path="donations" element={<Donations />} />
             <Route path="documents" element={<Documents />} />
