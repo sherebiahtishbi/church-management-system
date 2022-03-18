@@ -10,8 +10,8 @@ const Church = () => {
 
     return (
         <Box sx={{flexGrow:1, mt:12, borderRadius:2}}>
-            <Grid container spacing={0.25} sx={{ minHeight:'100vh'}}>
-                <Grid item xs={12} sm={12} md={4} lg={2} sx={{ height: '100%' }}>
+            <Grid container columnSpacing={0} sx={{ minHeight:'100vh'}}>
+                <Grid item xs={12} sm={12} md={4} lg={3} sx={{ height: '100%' }}>
                     <Box sx={{bgcolor:'background.paper',flexGrow:1, boxShadow:4, height:500, m:5, borderRadius:2, px:1}}>
                         <Typography variant="h6" pl={3} pt={3} sx={{ color: 'GrayText' }}>Church</Typography>
                         <List>
@@ -24,7 +24,7 @@ const Church = () => {
                         </List>
                     </Box>
                 </Grid>
-                <Grid item xs={12} sm={12} md={8} lg={10}>
+                <Grid item xs={12} sm={12} md={8} lg={9}>
                     <Box sx={{bgcolor:'background.paper',flexGrow:1, boxShadow:4, m:5, borderRadius:2, p:3}}>
                         <Outlet/>
                     </Box>

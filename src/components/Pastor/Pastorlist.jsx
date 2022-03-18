@@ -25,23 +25,39 @@ const Pastorlist = () => {
     },[])
 
     const columns=[
-        { field: "firstname", headerName: "Firstname", width: 200 },
-        { field: "lastname", headerName: "Lastname", width: 200}
+        { field: "firstname", headerName: "Firstname", width: 150 },
+        { field: "lastname", headerName: "Lastname", width: 150},
+        { 
+            field: "address", 
+            headerName: "Address", 
+            renderCell:({value})=>{
+                return (
+                    <>
+                    <div>
+                        {value.address1}
+                        <p>Phone: {value.phone1}</p>
+                    </div>
+                    </>
+                )},
+            width: 250
+        },
+        {field:"birthdate", headerName:"Birthdate",width:200}
     ]
 
     return (
         <Box>
             <Grid container>
-                <Grid container xs={12} justifyContent="space-between">
-                    <Grid item xs={12} md={6} justifyContent="start">
+                <Grid container xs={12}>
+                    <Grid item xs={12} md={6} display="flex" justifyContent="start">
                         <Typography variant="h6" color="GrayText">Pastors</Typography>
                     </Grid>
-                    <Grid item xs={12} md={6} justifyContent="end">
+                    <Grid item xs={12} md={6} display="flex" justifyContent="end">
                         <Button startIcon={<Add/>} onClick={()=>{navigate("/church/pastor/add")}} >Add New</Button>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} height={400} mt={2}>
                     <DataGrid
+                        rowHeight={100}
                         rows={pastors}
                         columns={columns}
                         getRowId={(row)=>row._id}

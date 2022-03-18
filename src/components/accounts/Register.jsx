@@ -77,10 +77,10 @@ const Register = () => {
           </Grid>
         </Grid>
         <Grid container mt={4}>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={2}>
             <Button onClick={handleCreateAccount}>Create Account</Button>
           </Grid>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={2}>
             <Button onClick={() => navigate("/")}>Login</Button>
           </Grid>
         </Grid>
