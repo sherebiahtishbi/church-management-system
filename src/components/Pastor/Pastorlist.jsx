@@ -1,64 +1,52 @@
-import { Box, Grid, Typography } from "@mui/material"
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { DataGrid } from "@mui/x-data-grid"
+import { Add } from "@mui/icons-material"
+import { useNavigate } from "react-router-dom"
+
 
 const Pastorlist = () => {
-    const [pastors, setPastors] = useState(null)
-    const [columns, setColumns] = useState([])
-    const [rows, setRows] = useState([])
-
+    const navigate = useNavigate()
+    const [pastors, setPastors] = useState([])
 
     useEffect(() => {
         const getPastors = async () => {
             try {
                 const res = await axios.get("http://localhost:7501/persons?type=pastor")
-                console.log(res.data)
                 if (res.data) {
                     setPastors(res.data)
-
-                    setColumns([
-                        { field: "id", headerName: "#", width: 90 },
-                        { field: "firstname", headerName: "Firstname", width: 90 },
-                        { field: "lastname", headerName: "Lastname", width: 90 },
-                    ])
-
-                    let mrows = []
-
-                    res.data.forEach((person,index) => {
-                        console.log(person)
-                        mrows.push({ id: index, firstname: person.firstname, lastname: person.lastname })
-                    })
-                    setRows(mrows)
-
-                    console.log(columns)
-                    console.log(rows)
-
                 }
             } catch (err) {
                 console.log(err)
             }
         }
-        pastors === null && getPastors()
-    })
-    
+        getPastors()
+    },[])
+
+    const columns=[
+        { field: "firstname", headerName: "Firstname", width: 200 },
+        { field: "lastname", headerName: "Lastname", width: 200}
+    ]
+
     return (
-        <Box mt={2}>
+        <Box>
             <Grid container>
-                <Grid item>
-                    controls
+                <Grid container xs={12} justifyContent="space-between">
+                    <Grid item xs={12} md={6} justifyContent="start">
+                        <Typography variant="h6" color="GrayText">Pastors</Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} justifyContent="end">
+                        <Button startIcon={<Add/>} onClick={()=>{navigate("/church/pastor/add")}} >Add New</Button>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    {/* pastors
-                    ? <DataGrid>
-                        rows={pastors.rows}
-                        columns={pastors.columns}
+                <Grid item xs={12} height={400} mt={2}>
+                    <DataGrid
+                        rows={pastors}
+                        columns={columns}
+                        getRowId={(row)=>row._id}
                         pageSize={5}
-                        rowsPerPageOptions={[5]}
-                        checkboxSelection
-                        disableSelectionOnClick
-                    </DataGrid>
-                    : <Typography variant="h6" >No pastor for this church yet!</Typography> */}
+                    />
                 </Grid>
             </Grid>
         </Box>
