@@ -1,33 +1,41 @@
-import { Password } from "@mui/icons-material"
 import { Button, Grid, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+//TODO remove the navbar
+
 const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
+	const [error, setError] = useState(false)
 
 	let navigate = useNavigate()
 
 	const handleLogin = async () => {
-		console.log("Username : " + username)
-		console.log("Password : " + password)
+		// console.log("Username : " + username)
+		// console.log("Password : " + password)
 		if (username && password) {
 			console.log("Credentials available!")
 			try {
-				const res = await axios.post(
-					"http://localhost:7501/auth/login",
-					{ username: username, password: password }
-				)
+				const res = await axios.post("/auth/login", {
+					username: username,
+					password: password,
+				})
 				if (res.status === 200) {
+					setError(false)
 					console.log("Login successfully!")
 					navigate("/churches")
+				} else {
+					setError(true)
 				}
 			} catch (err) {
+				setError(true)
 				console.log(err)
 			}
+		} else {
+			setError(true)
 		}
 	}
 
@@ -75,6 +83,14 @@ const Login = () => {
 						Register
 					</Button>
 				</Grid>
+				{error && (
+					<Grid item xs={12}>
+						<Typography color="red">
+							Login failed! Please provide correct username and
+							password.
+						</Typography>
+					</Grid>
+				)}
 			</Grid>
 		</Box>
 	)

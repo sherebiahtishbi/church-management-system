@@ -1,4 +1,5 @@
 import { React, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import {
 	AppBar,
 	Toolbar,
@@ -14,13 +15,12 @@ import {
 } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import axios from "axios"
-// import { useNavigate } from 'react-router-dom';
 
 const pages = ["Church", "Business", "Blog"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"]
 
 const Navbar = (props) => {
-	// let navigate = useNavigate()
+	const navigate = useNavigate()
 
 	const [anchorElNav, setAnchorElNav] = useState(null)
 	const [anchorElUser, setAnchorElUser] = useState(null)
@@ -36,13 +36,14 @@ const Navbar = (props) => {
 		setAnchorElNav(null)
 	}
 
-	const handleCloseUserMenu = (e) => {
+	const handleCloseUserMenu = async (e) => {
 		const menutext = e.currentTarget.children[0].innerText
 		if (menutext === "Logout") {
 			console.log("Logging you out!")
 			try {
-				const res = axios.get("http://localhost:7501/auth/logout")
+				const res = await axios.get("/auth/logout")
 				console.log(res.data)
+				navigate("/")
 			} catch (err) {
 				console.log(err)
 			}

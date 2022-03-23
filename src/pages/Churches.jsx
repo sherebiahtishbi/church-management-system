@@ -1,3 +1,8 @@
+//react imports
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+
+//mui imports
 import {
 	Card,
 	CardMedia,
@@ -5,29 +10,31 @@ import {
 	Typography,
 	CardActions,
 	Grid,
+	Box,
+	Button,
 } from "@mui/material"
+
+//internal imports
+// import { apiRequest } from "../apirequests/baserequests"
 import axios from "axios"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 
 const Churches = () => {
 	const [churches, setChurches] = useState([])
+	const [error, setError] = useState(false)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const getChurches = async () => {
 			console.log("calling church api")
 			try {
-				const res = await axios.get("http://localhost:7501/church", {
-					withCredentials: true,
-					headers: {
-						"Access-Control-Allow-Origin": "http://localhost:3000",
-					},
-				})
+				const res = await axios.get("/church")
 				if (res.data) {
 					console.log(res.data)
+					setError(false)
 					setChurches(res.data)
 				}
 			} catch (err) {
+				setError(true)
 				console.log(err)
 			}
 		}
@@ -37,7 +44,28 @@ const Churches = () => {
 	return (
 		<>
 			<Grid container spacing={2} sx={{ mt: 8 }}>
-				{churches &&
+				{error ? (
+					<Box
+						display="flex"
+						mt={5}
+						width="100vw"
+						flexDirection="column"
+						alignItems="center"
+					>
+						<Typography color="red" variant="h6">
+							Sorry we could not fulfill the request, it seems you
+							are not logged in!
+						</Typography>
+						<Button
+							onClick={() => {
+								navigate("/")
+							}}
+						>
+							Go to Login
+						</Button>
+					</Box>
+				) : (
+					churches &&
 					churches.map((church) => {
 						return (
 							<Grid item xs={12} md={4} xl={3} key={church.id}>
@@ -82,7 +110,8 @@ const Churches = () => {
 								</Card>
 							</Grid>
 						)
-					})}
+					})
+				)}
 			</Grid>
 			{/* <Outlet /> */}
 		</>
