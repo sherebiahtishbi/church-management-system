@@ -64,8 +64,7 @@ const Churches = () => {
 							Go to Login
 						</Button>
 					</Box>
-				) : (
-					churches &&
+				) : churches.length > 0 ? (
 					churches.map((church) => {
 						return (
 							<Grid item xs={12} md={4} xl={3} key={church.id}>
@@ -111,6 +110,24 @@ const Churches = () => {
 							</Grid>
 						)
 					})
+				) : (
+					<Box
+						mt={25}
+						width="100%"
+						display="flex"
+						flexDirection="column"
+						flexWrap={true}
+						alignItems="center"
+						justifyContent="center"
+					>
+						<Typography variant="h4" color="GrayText">
+							You dont have any church added yet! Please add the
+							church(s).
+						</Typography>
+						<Button onClick={() => navigate("/churches/add")}>
+							Add Church
+						</Button>
+					</Box>
 				)}
 			</Grid>
 			{/* <Outlet /> */}

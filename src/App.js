@@ -15,6 +15,7 @@ import Events from "./components/Church/Events"
 import Facilities from "./components/Church/Facilities"
 import Register from "./components/accounts/Register"
 import ProtectedRoute from "./components/common/ProtectedRoute"
+import ChurchAddEdit from "./components/Church/ChurchAddEdit"
 // import DataGridDemo from './components/Pastor/DataGridDemo';
 
 function App() {
@@ -26,9 +27,9 @@ function App() {
 					<Route path="/" element={<Login />} />
 					<Route path="/accounts" element={<Register />} />
 					<Route path="/churches" element={<Churches />} />
-					<Route
-						path="/church"
-						element={
+					<Route path="/churches/add" element={<ChurchAddEdit />} />
+
+					{/* <Route path="/church" element={
 							<ProtectedRoute user={false}>
 								<Church />
 							</ProtectedRoute>
@@ -41,7 +42,9 @@ function App() {
 									<Pastorlist />
 								</ProtectedRoute>
 							}
-						/>
+						/> */}
+					<Route path="/church" element={<Church />}>
+						<Route path="pastor" element={<Pastorlist />} />
 						<Route path="pastor/add" element={<PastorAddEdit />} />
 						<Route path="members" element={<Members />} />
 						<Route path="donations" element={<Donations />} />
