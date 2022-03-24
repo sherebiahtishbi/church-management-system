@@ -16,7 +16,9 @@ import Facilities from "./components/Church/Facilities"
 import Register from "./components/accounts/Register"
 import ProtectedRoute from "./components/common/ProtectedRoute"
 import ChurchAddEdit from "./components/Church/ChurchAddEdit"
-// import DataGridDemo from './components/Pastor/DataGridDemo';
+import Unauthorized from "./components/common/Unauthorized"
+import Logout from "./pages/Logout"
+import Pagenotfound from "./pages/Pagenotfound"
 
 function App() {
 	return (
@@ -25,9 +27,25 @@ function App() {
 				<Navbar image={profileImage} />
 				<Routes>
 					<Route path="/" element={<Login />} />
+					<Route path="/logout" element={<Logout />} />
+					<Route path="/unauthorized" element={<Unauthorized />} />
 					<Route path="/accounts" element={<Register />} />
-					<Route path="/churches" element={<Churches />} />
-					<Route path="/churches/add" element={<ChurchAddEdit />} />
+					<Route
+						path="/churches"
+						element={
+							<ProtectedRoute>
+								<Churches />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/churches/add"
+						element={
+							<ProtectedRoute>
+								<ChurchAddEdit />
+							</ProtectedRoute>
+						}
+					/>
 
 					{/* <Route path="/church" element={
 							<ProtectedRoute user={false}>
@@ -43,7 +61,14 @@ function App() {
 								</ProtectedRoute>
 							}
 						/> */}
-					<Route path="/church" element={<Church />}>
+					<Route
+						path="/church"
+						element={
+							<ProtectedRoute>
+								<Church />
+							</ProtectedRoute>
+						}
+					>
 						<Route path="pastor" element={<Pastorlist />} />
 						<Route path="pastor/add" element={<PastorAddEdit />} />
 						<Route path="members" element={<Members />} />
@@ -52,6 +77,7 @@ function App() {
 						<Route path="events" element={<Events />} />
 						<Route path="facilities" element={<Facilities />} />
 					</Route>
+					<Route path="*" element={<Pagenotfound />} />
 				</Routes>
 			</Router>
 		</ThemeProvider>

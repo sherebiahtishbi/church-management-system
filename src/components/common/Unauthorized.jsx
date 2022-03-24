@@ -1,23 +1,16 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
-const Logout = () => {
+const Unauthorized = () => {
 	const navigate = useNavigate()
 
 	return (
 		<Box sx={{ mt: { xs: 10, lg: 20 } }}>
 			<Box m="auto" maxWidth={"lg"} p={5} boxShadow={3} borderRadius={2}>
-				<Grid
-					container
-					width="100%"
-					rowSpacing={4}
-					display="flex"
-					alignItems="center"
-					justifyContent="center"
-				>
+				<Grid container width="100%" rowSpacing={4}>
 					<Grid item xs={12} md={12}>
 						<Typography variant="h4" color="red" pb={1}>
-							You are successfully logged out!
+							Page you requested requires you to login first.
 						</Typography>
 					</Grid>
 					<Grid item xs={12} md={12}>
@@ -26,7 +19,7 @@ const Logout = () => {
 								navigate("/")
 							}}
 						>
-							Login again
+							Go to Login
 						</Button>
 					</Grid>
 				</Grid>
@@ -35,4 +28,4 @@ const Logout = () => {
 	)
 }
 
-export default Logout
+export default Unauthorized

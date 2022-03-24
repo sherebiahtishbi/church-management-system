@@ -1,4 +1,4 @@
-import { React, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
 	AppBar,
@@ -15,13 +15,16 @@ import {
 } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { remove } from "../redux/userSlice"
 
 const pages = ["Church", "Business", "Blog"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"]
 
 const Navbar = (props) => {
 	const navigate = useNavigate()
-
+	const dispath = useDispatch()
+	let username = useSelector((state) => state.user.userinfo.userid) || ""
 	const [anchorElNav, setAnchorElNav] = useState(null)
 	const [anchorElUser, setAnchorElUser] = useState(null)
 
@@ -39,19 +42,20 @@ const Navbar = (props) => {
 	const handleCloseUserMenu = async (e) => {
 		const menutext = e.currentTarget.children[0].innerText
 		if (menutext === "Logout") {
-			console.log("Logging you out!")
 			try {
 				const res = await axios.get("/auth/logout")
 				console.log(res.data)
-				navigate("/")
+				console.log("Logging you out!")
+				dispath(remove())
+				navigate("/logout")
 			} catch (err) {
 				console.log(err)
 			}
 		}
 		setAnchorElUser(null)
 	}
-
-	return (
+	console.log(username)
+	return username ? (
 		<AppBar color={props.color && props.color}>
 			<Container maxWidth={false}>
 				<Toolbar disableGutters>
@@ -189,6 +193,8 @@ const Navbar = (props) => {
 				</Toolbar>
 			</Container>
 		</AppBar>
+	) : (
+		""
 	)
 }
 

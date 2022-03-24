@@ -3,6 +3,8 @@ import { Box } from "@mui/system"
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { update } from "../redux/userSlice"
 
 //TODO remove the navbar
 
@@ -10,6 +12,7 @@ const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState(false)
+	const dispath = useDispatch()
 
 	let navigate = useNavigate()
 
@@ -24,7 +27,16 @@ const Login = () => {
 					password: password,
 				})
 				if (res.status === 200) {
+					console.log(res.data)
 					setError(false)
+					dispath(
+						update({
+							userid: res.data.userid,
+							username: res.data.username,
+							accountid: res.data.accountid,
+							roles: res.data.roles,
+						})
+					)
 					console.log("Login successfully!")
 					navigate("/churches")
 				} else {

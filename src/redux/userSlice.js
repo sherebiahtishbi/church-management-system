@@ -3,19 +3,26 @@ import { createSlice } from "@reduxjs/toolkit"
 const userSlice = createSlice({
 	name: "user",
 	initialState: {
-		userid: "abcd",
-		accountid: "xyz",
-		roles: [],
+		userinfo: {
+			userid: "",
+			username: "",
+			accountid: "",
+			roles: [],
+		},
 	},
 
 	reducers: {
-		updateUserState: (state, action) => {
-			state.userid = action.payload.userid
-			state.accountid = action.payload.accountid
-			state.roles = action.payload.roles
+		update: (state, action) => {
+			state.userinfo.userid = action.payload.userid
+			state.userinfo.username = action.payload.username
+			state.userinfo.accountid = action.payload.accountid
+			state.userinfo.roles = action.payload.roles
+		},
+		remove: (state) => {
+			state.userinfo = null
 		},
 	},
 })
 
-export const { updateUserState } = userSlice.actions
+export const { update, remove } = userSlice.actions
 export default userSlice.reducer

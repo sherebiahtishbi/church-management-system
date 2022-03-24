@@ -9,15 +9,26 @@ import {
 import { useState } from "react"
 import { countries } from "../../dataobjects/countries"
 import { useSelector } from "react-redux"
+import axios from "axios"
 
 const ChurchAddEdit = () => {
-	const [formData, setFormData] = useState({})
-	const userid = useSelector((state) => state.user.userid)
-	const accountid = useSelector((state) => state.user.accountid)
+	const userid = useSelector((state) => state.user.userinfo.userid)
+	const accountid = useSelector((state) => state.user.userinfo.accountid)
+	const [error, setError] = useState(false)
+	const [formData, setFormData] = useState({
+		userid: userid,
+		accountid: accountid,
+	})
 
-	const handleSave = () => {
-		formData = { ...formData, userid: userid, accountid: accountid }
-		console.log(formData)
+	const handleSave = async () => {
+		//console.log(formData)
+		try {
+			const res = await axios.post("/church/save", formData)
+			setError(false)
+		} catch (err) {
+			setError(true)
+			console.log(err)
+		}
 	}
 
 	return (
@@ -45,6 +56,22 @@ const ChurchAddEdit = () => {
 								setFormData({
 									...formData,
 									churchname: e.target.value,
+								})
+							}
+						></TextField>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							fullWidth
+							id="churchdesc"
+							label="Description/History of the Church"
+							type="text"
+							variant="standard"
+							value={formData.churchdesc || ""}
+							onChange={(e) =>
+								setFormData({
+									...formData,
+									churchdesc: e.target.value,
 								})
 							}
 						></TextField>
@@ -169,6 +196,69 @@ const ChurchAddEdit = () => {
 					<Grid item xs={12} md={4}>
 						<TextField
 							fullWidth
+							id="phone1"
+							label="Phone1"
+							type="text"
+							variant="standard"
+							value={
+								formData.address ? formData.address.phone1 : ""
+							}
+							onChange={(e) =>
+								setFormData({
+									...formData,
+									address: {
+										...formData.address,
+										phone1: e.target.value,
+									},
+								})
+							}
+						></TextField>
+					</Grid>
+					<Grid item xs={12} md={4}>
+						<TextField
+							fullWidth
+							id="phone2"
+							label="Phone2"
+							type="text"
+							variant="standard"
+							value={
+								formData.address ? formData.address.phone2 : ""
+							}
+							onChange={(e) =>
+								setFormData({
+									...formData,
+									address: {
+										...formData.address,
+										phone2: e.target.value,
+									},
+								})
+							}
+						></TextField>
+					</Grid>
+					<Grid item xs={12} md={4}>
+						<TextField
+							fullWidth
+							id="email"
+							label="Email"
+							type="text"
+							variant="standard"
+							value={
+								formData.address ? formData.address.email : ""
+							}
+							onChange={(e) =>
+								setFormData({
+									...formData,
+									address: {
+										...formData.address,
+										email: e.target.value,
+									},
+								})
+							}
+						></TextField>
+					</Grid>
+					<Grid item xs={12} md={4}>
+						<TextField
+							fullWidth
 							id="startdate"
 							label="Start date"
 							type="date"
@@ -221,6 +311,15 @@ const ChurchAddEdit = () => {
 						<Button variant="outlined" sx={{ ml: 2 }}>
 							Cancel
 						</Button>
+						{error === true ? (
+							<Typography color="red" variant="body2" ml={2}>
+								Oops! something went wrong! Cannot save church.
+							</Typography>
+						) : (
+							<Typography color="Green" variant="body2" ml={2}>
+								Church added successfully!
+							</Typography>
+						)}
 					</Grid>
 				</Grid>
 			</Box>

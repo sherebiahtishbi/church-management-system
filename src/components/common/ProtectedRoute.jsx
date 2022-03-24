@@ -1,23 +1,19 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
 import { Navigate, Outlet } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const ProtectedRoute = ({ children }) => {
-	const [authenticated, setAuthenticated] = useState(false)
-	useEffect(() => {
-		const verifyUser = async () => {
-			try {
-				const res = await axios.get("/auth/verify")
-				return children ? children : <Outlet />
-			} catch (err) {
-				return <Navigate to="/" replace />
-			}
-		}
-		verifyUser()
-	}, [])
+	const username = useSelector((state) => {
+		console.log(state.user)
+		return state.user.userinfo.userid
+	})
 
-	if (authenticated) {
+	// console.log(children)
+	// console.log(username)
+
+	if (!username) {
+		return <Navigate to="/unauthorized" replace />
 	}
+	return children ? children : <Outlet />
 }
 
 export default ProtectedRoute
