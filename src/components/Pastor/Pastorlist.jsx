@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { DataGrid } from "@mui/x-data-grid"
-import { Add } from "@mui/icons-material"
+import { Add, Person, PersonAdd } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
 
 const Pastorlist = () => {
@@ -12,7 +12,7 @@ const Pastorlist = () => {
 	useEffect(() => {
 		const getPastors = async () => {
 			try {
-				const res = await axios.get("/persons?type=pastor")
+				const res = await axios.get("/persons?t=pastor&c=abcd")
 				if (res.data) {
 					setPastors(res.data)
 				}
@@ -32,10 +32,9 @@ const Pastorlist = () => {
 			renderCell: ({ value }) => {
 				return (
 					<>
-						<div>
-							{value.address1}
-							<p>Phone: {value.phone1}</p>
-						</div>
+						{value.address1}
+						<br />
+						Phone: {value.phone1}
 					</>
 				)
 			},
@@ -47,7 +46,7 @@ const Pastorlist = () => {
 	return (
 		<Box>
 			<Grid container>
-				<Grid container xs={12}>
+				<Grid container>
 					<Grid
 						item
 						xs={12}
@@ -55,7 +54,8 @@ const Pastorlist = () => {
 						display="flex"
 						justifyContent="start"
 					>
-						<Typography variant="h6" color="GrayText">
+						<Person fontSize="large" htmlColor="GrayText" />
+						<Typography variant="h6" color="GrayText" ml={2}>
 							Pastors
 						</Typography>
 					</Grid>
@@ -67,7 +67,7 @@ const Pastorlist = () => {
 						justifyContent="end"
 					>
 						<Button
-							startIcon={<Add />}
+							startIcon={<PersonAdd />}
 							onClick={() => {
 								navigate("/church/pastor/add")
 							}}
@@ -77,13 +77,37 @@ const Pastorlist = () => {
 					</Grid>
 				</Grid>
 				<Grid item xs={12} height={400} mt={2}>
-					<DataGrid
-						rowHeight={100}
-						rows={pastors}
-						columns={columns}
-						getRowId={(row) => row._id}
-						pageSize={5}
-					/>
+					{pastors.length > 0 ? (
+						<DataGrid
+							rowHeight={70}
+							rows={pastors}
+							columns={columns}
+							getRowId={(row) => row._id}
+							pageSize={5}
+						/>
+					) : (
+						<Box
+							height="100%"
+							width="100%"
+							display="flex"
+							flexDirection="column"
+							alignItems="center"
+							justifyContent="center"
+						>
+							<Typography variant="h4" color="GrayText" mb={2}>
+								There are no pastor available for this church!
+								Please add one.
+							</Typography>
+							<Button
+								startIcon={<PersonAdd />}
+								onClick={() => {
+									navigate("/church/pastor/add")
+								}}
+							>
+								Add Pastor
+							</Button>
+						</Box>
+					)}
 				</Grid>
 			</Grid>
 		</Box>

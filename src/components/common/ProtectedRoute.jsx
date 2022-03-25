@@ -7,9 +7,6 @@ const ProtectedRoute = ({ children }) => {
 		return state.user.userinfo.userid
 	})
 
-	// console.log(children)
-	// console.log(username)
-
 	if (!username) {
 		return <Navigate to="/unauthorized" replace />
 	}

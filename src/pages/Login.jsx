@@ -53,7 +53,7 @@ const Login = () => {
 
 	return (
 		<Box height={400} width={200} boxShadow={4} mt={15} ml={10} p={5}>
-			<Grid container xs={12}>
+			<Grid container>
 				<Grid item xs={12}>
 					<Typography variant="h6" color="GrayText">
 						Login

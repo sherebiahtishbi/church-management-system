@@ -1,6 +1,6 @@
 //react imports
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 //mui imports
 import { Typography, Grid, Box, Button } from "@mui/material"
@@ -9,6 +9,7 @@ import { Typography, Grid, Box, Button } from "@mui/material"
 // import { apiRequest } from "../apirequests/baserequests"
 import axios from "axios"
 import ChurchCard from "../components/Church/ChurchCard"
+import nochurch from "../images/nochurch.png"
 
 const Churches = () => {
 	const [churches, setChurches] = useState([])
@@ -21,9 +22,20 @@ const Churches = () => {
 			try {
 				const res = await axios.get("/church")
 				if (res.data) {
+					const dummy = {
+						_id: 9999,
+						churchname: "Add Church",
+						description:
+							"Add a new Church to manage its information.",
+						churchimg: nochurch,
+					}
 					console.log(res.data)
+					// setChurches(res.data)
+					const updatedchurches = [dummy, ...res.data]
+					console.log(updatedchurches)
+					setChurches(updatedchurches)
+					// console.log(churches)
 					setError(false)
-					setChurches(res.data)
 				}
 			} catch (err) {
 				setError(true)
@@ -32,7 +44,6 @@ const Churches = () => {
 		}
 		getChurches()
 	}, [])
-
 	return (
 		<>
 			<Grid container spacing={2} sx={{ mt: 8 }}>
@@ -40,7 +51,7 @@ const Churches = () => {
 					navigate("/unauthorized")
 				) : churches.length > 0 ? (
 					churches.map((church) => {
-						return <ChurchCard church={church} />
+						return <ChurchCard key={church._id} church={church} />
 					})
 				) : (
 					<Box
@@ -52,7 +63,13 @@ const Churches = () => {
 						alignItems="center"
 						justifyContent="center"
 					>
-						<Typography variant="h4" color="GrayText">
+						<img
+							src={nochurch}
+							height="200"
+							width="auto"
+							alt="new church"
+						/>
+						<Typography variant="h4" color="GrayText" my={4}>
 							You dont have any church added yet! Please add the
 							church(s).
 						</Typography>

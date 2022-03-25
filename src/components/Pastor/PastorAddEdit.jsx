@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { styled } from "@mui/material/styles"
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material"
 import Personalnfo from "../common/Personalnfo"
 import AddressInfo from "../common/AddressInfo"
@@ -7,13 +8,21 @@ import EducationInfo from "../common/EducationInfo"
 import EmploymentInfo from "../common/EmploymentInfo"
 import GraceStepper from "../common/GraceStepper"
 import { objectPerson } from "../../dataobjects/objectPerson"
-import { ChevronLeft, ChevronRight, KeyboardReturn } from "@mui/icons-material"
+import {
+	ChevronLeft,
+	ChevronRight,
+	KeyboardReturn,
+	Person,
+	AddAPhoto,
+} from "@mui/icons-material"
 import axios from "axios"
 
-// const images = require.context('../../images', true);
+const Input = styled("input")({
+	display: "none",
+})
 
 function PastorAddEdit() {
-	const [formData, setFormData] = useState(objectPerson)
+	const [formData, setFormData] = useState({})
 	const [step, setStep] = useState(0)
 	const entrysteps = [
 		"Personal Info",
@@ -26,11 +35,8 @@ function PastorAddEdit() {
 		console.log(formData)
 		console.log("About to post data!")
 		try {
-			const res = await axios.post(
-				"http://localhost:7501/persons/save",
-				formData
-			)
-			console.log(res)
+			const res = await axios.post("/persons/save", formData)
+			console.log(res.data)
 		} catch (err) {
 			console.log(err)
 		}
@@ -38,21 +44,28 @@ function PastorAddEdit() {
 
 	return (
 		<div>
-			<Typography variant="h6" sx={{ color: "GrayText", pb: 2 }}>
-				Pastor
-			</Typography>
+			<Box width="100%" display="flex" justifyContent="center">
+				<Person fontSize="large" htmlColor="GrayText" />
+				<Typography
+					variant="h6"
+					sx={{ color: "GrayText", pb: 2, pl: 2 }}
+				>
+					Adding new Pastor
+				</Typography>
+			</Box>
 			<GraceStepper steps={entrysteps} activeStep={step} />
 			<Box mt={3} pb={4}>
 				<Grid container spacing={0.25}>
 					<Grid
-						container
+						item
 						xs={12}
 						sm={12}
 						md={2}
 						xl={2}
 						justifyContent="center"
 						alignItems="center"
-						display={"flex"}
+						display="flex"
+						flexDirection="column"
 					>
 						<Avatar
 							alt="Anugrah Tisbi"
@@ -62,14 +75,32 @@ function PastorAddEdit() {
 								width: "80%",
 								height: "auto",
 								boxShadow: 10,
+								mb: 2,
 							}}
 						/>
 						{!formData.profileimage ? (
-							<Typography sx={{ xs: 12 }}>
-								Upload Photo
-							</Typography>
+							<label htmlFor="profilepic">
+								<Input
+									accept="image/*"
+									id="profilepic"
+									multiple
+									type="file"
+								/>
+								<Button
+									component="span"
+									startIcon={<AddAPhoto />}
+								>
+									Upload
+								</Button>
+							</label>
 						) : (
-							<Typography sx={{ xs: 12 }}>
+							// <>
+							// 	<input type="file" label="Upload Photo" />
+							// 	<Typography sx={{ xs: 12, py: 2 }}>
+							// 		Upload Photo
+							// 	</Typography>
+							// </>
+							<Typography sx={{ xs: 12, py: 2 }}>
 								Change Photo
 							</Typography>
 						)}

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from "./pages/Login"
 import theme from "./theme/theme"
 import Churches from "./pages/Churches"
-import Navbar from "./components/Navbar"
+import Navbar from "./components/common/Navbar"
 import profileImage from "./images/anu_profile.jpg"
 import Church from "./pages/Church"
 import PastorAddEdit from "./components/Pastor/PastorAddEdit"
@@ -47,20 +47,6 @@ function App() {
 						}
 					/>
 
-					{/* <Route path="/church" element={
-							<ProtectedRoute user={false}>
-								<Church />
-							</ProtectedRoute>
-						}
-					>
-						<Route
-							path="pastor"
-							element={
-								<ProtectedRoute user={false}>
-									<Pastorlist />
-								</ProtectedRoute>
-							}
-						/> */}
 					<Route
 						path="/church"
 						element={

@@ -16,7 +16,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { remove } from "../redux/userSlice"
+import { remove } from "../../redux/userSlice"
 
 const pages = ["Church", "Business", "Blog"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"]
@@ -54,7 +54,6 @@ const Navbar = (props) => {
 		}
 		setAnchorElUser(null)
 	}
-	console.log(username)
 	return username ? (
 		<AppBar color={props.color && props.color}>
 			<Container maxWidth={false}>

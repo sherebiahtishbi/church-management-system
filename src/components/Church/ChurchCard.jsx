@@ -1,48 +1,57 @@
-import {
-	Card,
-	CardActions,
-	CardContent,
-	CardMedia,
-	Grid,
-	Typography,
-} from "@mui/material"
-import { Link } from "react-router-dom"
+import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material"
+import Newchurch from "./Newchurch"
+import { useNavigate } from "react-router-dom"
 
 const ChurchCard = ({ church }) => {
-	// console.log(church)
+	const navigate = useNavigate()
 	return (
-		<Grid item xs={12} md={4} xl={3} key={church.id}>
-			<Card sx={{ p: 1, m: 1 }} raised>
-				<CardMedia
-					component="img"
-					alt={church.churchname}
-					height="160"
-					image={church.churchimg}
-				/>
-				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
-						{church.churchname}
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
-						{church.description.substring(0, 200)}
-					</Typography>
-				</CardContent>
-				<CardActions>
-					<Link
-						style={{
-							display: "block",
-							margin: "1rem 0",
-						}}
-						// to={`/churches/${church.id}`}
-						to={`/church`}
-						key={church._id}
-					>
-						View Details
-					</Link>
-					{/* <Button size="small">Manage</Button>
-                                    <Button size="small">View Details</Button> */}
-				</CardActions>
-			</Card>
+		<Grid item xs={12} md={3} xl={2.5}>
+			{church._id !== 9999 ? (
+				<Card
+					sx={{
+						p: 1,
+						m: 1,
+						backgroundColor: "#dcf2fa",
+						boxShadow: 3,
+						"&:hover": {
+							backgroundColor: "#F2F2F2",
+							cursor: "pointer",
+							boxShadow: 5,
+						},
+					}}
+					raised
+					onClick={() => navigate("/church")}
+				>
+					<CardMedia
+						component="img"
+						alt={church.churchname}
+						height="160"
+						image={church.churchimg}
+					/>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="div">
+							{church.churchname}
+						</Typography>
+						<Typography variant="body2" color="text.secondary">
+							{church.description.substring(0, 200)}
+						</Typography>
+					</CardContent>
+					{/* <CardActions>
+						<Link
+							style={{
+								display: "block",
+								margin: "1rem 0",
+							}}
+							to={`/church`}
+							key={church._id}
+						>
+							View Details
+						</Link>
+					</CardActions> */}
+				</Card>
+			) : (
+				<Newchurch />
+			)}
 		</Grid>
 	)
 }

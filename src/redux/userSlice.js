@@ -19,7 +19,7 @@ const userSlice = createSlice({
 			state.userinfo.roles = action.payload.roles
 		},
 		remove: (state) => {
-			state.userinfo = null
+			state.userinfo = {}
 		},
 	},
 })
