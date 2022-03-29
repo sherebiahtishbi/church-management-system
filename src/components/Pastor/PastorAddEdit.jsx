@@ -17,6 +17,14 @@ import {
 } from "@mui/icons-material"
 import axios from "axios"
 
+//styled components
+const TitleContainer = styled("div")({
+	width: "100%",
+	display: "flex",
+	justifyContent: "center",
+	marginBottom: 5,
+})
+
 const Input = styled("input")({
 	display: "none",
 })
@@ -44,7 +52,8 @@ function PastorAddEdit() {
 
 	return (
 		<div>
-			<Box width="100%" display="flex" justifyContent="center">
+			<TitleContainer>
+				{/* <Box width="100%" display="flex" justifyContent="center"> */}
 				<Person fontSize="large" htmlColor="GrayText" />
 				<Typography
 					variant="h6"
@@ -52,9 +61,11 @@ function PastorAddEdit() {
 				>
 					Adding new Pastor
 				</Typography>
-			</Box>
-			<GraceStepper steps={entrysteps} activeStep={step} />
+				{/* </Box> */}
+			</TitleContainer>
+
 			<Box mt={3} pb={4}>
+				<GraceStepper steps={entrysteps} activeStep={step} />
 				<Grid container spacing={0.25}>
 					<Grid
 						item
@@ -94,12 +105,6 @@ function PastorAddEdit() {
 								</Button>
 							</label>
 						) : (
-							// <>
-							// 	<input type="file" label="Upload Photo" />
-							// 	<Typography sx={{ xs: 12, py: 2 }}>
-							// 		Upload Photo
-							// 	</Typography>
-							// </>
 							<Typography sx={{ xs: 12, py: 2 }}>
 								Change Photo
 							</Typography>
