@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from "./pages/Login"
 import theme from "./theme/theme"
 import Churches from "./pages/Churches"
-import Navbar from "./components/common/Navbar"
+import Navbar from "./components/common/nav/Navbar"
 import profileImage from "./images/anu_profile.jpg"
 import Church from "./pages/Church"
 import PastorAddEdit from "./components/Pastor/PastorAddEdit"
@@ -19,14 +19,34 @@ import ChurchAddEdit from "./components/Church/ChurchAddEdit"
 import Unauthorized from "./components/common/Unauthorized"
 import Logout from "./pages/Logout"
 import Pagenotfound from "./pages/Pagenotfound"
+import Home from "./pages/Home"
+import Mainpage from "./components/Church/Mainpage"
 
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
-				<Navbar image={profileImage} />
+				{/* <Navbar image={profileImage} /> */}
 				<Routes>
 					<Route path="/" element={<Login />} />
+					<Route path="/home" element={<Home />}>
+						<Route
+							index
+							element={
+								<ProtectedRoute>
+									<Mainpage />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="addchurch"
+							element={
+								<ProtectedRoute>
+									<ChurchAddEdit />
+								</ProtectedRoute>
+							}
+						/>
+					</Route>
 					<Route path="/logout" element={<Logout />} />
 					<Route path="/unauthorized" element={<Unauthorized />} />
 					<Route path="/accounts" element={<Register />} />

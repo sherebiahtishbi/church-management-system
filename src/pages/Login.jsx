@@ -38,7 +38,7 @@ const Login = () => {
 						})
 					)
 					console.log("Login successfully!")
-					navigate("/churches")
+					navigate("/home")
 				} else {
 					setError(true)
 				}

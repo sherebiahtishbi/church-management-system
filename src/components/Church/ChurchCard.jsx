@@ -1,56 +1,65 @@
-import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material"
-import Newchurch from "./Newchurch"
+import { CardMedia, Grid } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import { flexbox, styled } from "@mui/system"
+import { alpha } from "@mui/material"
+import { Add } from "@mui/icons-material"
+
+const STCard = styled("div")(({ theme }) => ({
+	padding: 1,
+	margin: 1,
+	[theme.breakpoints.down("md")]: {
+		padding: 0,
+		margin: 0,
+	},
+	backgroundColor: theme.palette.primary.light,
+	boxShadow: theme.shadows[2],
+	borderRadius: 2,
+	"&:hover": {
+		backgroundColor: theme.palette.primary.main,
+		cursor: "pointer",
+		boxShadow: theme.shadows[4],
+	},
+}))
+
+const STChurchName = styled("div")(({ theme }) => ({
+	fontSize: 18,
+	padding: 10,
+	alignItems: "center",
+	justifyContent: "center",
+	textAlign: "center",
+	lineHeight: "1.5rem",
+	backgroundColor: alpha(theme.palette.primary.main, 0.3),
+}))
+
+const STAddIcon = styled("div")(({ theme }) => ({
+	fontSize: 40,
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+	backgroundColor: alpha(theme.palette.primary.main, 0.3),
+}))
 
 const ChurchCard = ({ church }) => {
 	const navigate = useNavigate()
 	return (
-		<Grid item xs={12} md={3} xl={2.5}>
+		<Grid item xs={12} md={3} xl={3}>
 			{church._id !== 9999 ? (
-				<Card
-					sx={{
-						p: 1,
-						m: 1,
-						backgroundColor: "#dcf2fa",
-						boxShadow: 3,
-						"&:hover": {
-							backgroundColor: "#F2F2F2",
-							cursor: "pointer",
-							boxShadow: 5,
-						},
-					}}
-					raised
-					onClick={() => navigate("/church")}
-				>
+				<STCard onClick={() => navigate("/home/addchurch")}>
 					<CardMedia
 						component="img"
 						alt={church.churchname}
 						height="160"
 						image={church.churchimg}
 					/>
-					<CardContent>
-						<Typography gutterBottom variant="h5" component="div">
-							{church.churchname}
-						</Typography>
-						<Typography variant="body2" color="text.secondary">
-							{church.description.substring(0, 200)}
-						</Typography>
-					</CardContent>
-					{/* <CardActions>
-						<Link
-							style={{
-								display: "block",
-								margin: "1rem 0",
-							}}
-							to={`/church`}
-							key={church._id}
-						>
-							View Details
-						</Link>
-					</CardActions> */}
-				</Card>
+					<STChurchName>{church.churchname}</STChurchName>
+				</STCard>
 			) : (
-				<Newchurch />
+				<STCard onClick={() => navigate("/home/addchurch")}>
+					<STAddIcon>
+						<Add fontSize="60" />
+					</STAddIcon>
+					<STChurchName>{church.churchname}</STChurchName>
+				</STCard>
 			)}
 		</Grid>
 	)

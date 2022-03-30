@@ -1,3 +1,4 @@
+import { grey } from "@mui/material/colors"
 import { createTheme } from "@mui/material/styles"
 
 //#ef476f, #ffd166, #06d6a0, #118ab2, #0c637f, #073b4c
@@ -5,12 +6,6 @@ import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
 	palette: {
-		// primary: {
-		//     main: '#118ab2'
-		// },
-		// secondary: {
-		//     main: '#0c637f'
-		// }
 		primary: {
 			light: "#ffffff",
 			main: "#e0f2f1",
@@ -24,6 +19,9 @@ const theme = createTheme({
 			contrastText: "#ffffff",
 		},
 		mode: "light",
+		cmstexts: {
+			dark: grey[800],
+		},
 	},
 })
 
