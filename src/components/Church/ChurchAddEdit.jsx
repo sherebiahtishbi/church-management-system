@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	Grid,
+	IconButton,
 	MenuItem,
 	TextField,
 	Typography,
@@ -10,27 +11,36 @@ import { useState } from "react"
 import { countries } from "../../dataobjects/countries"
 import { useSelector } from "react-redux"
 import axios from "axios"
-import { styled } from "@mui/system"
+import { borderRadius, styled } from "@mui/system"
+import { useNavigate } from "react-router-dom"
+import { alpha } from "@mui/material/styles"
+import { PhotoCamera } from "@mui/icons-material"
+import Upload from "../common/Upload"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	width: "100%",
 	padding: 30,
+	[theme.breakpoints.down("lg")]: {
+		padding: 10,
+	},
 }))
 
 const ChurchAddEdit = () => {
+	const navigate = useNavigate()
 	const userid = useSelector((state) => state.user.userinfo.userid)
 	const accountid = useSelector((state) => state.user.userinfo.accountid)
-	const [error, setError] = useState(false)
+	const [error, setError] = useState(null)
 	const [formData, setFormData] = useState({
 		userid: userid,
 		accountid: accountid,
 	})
+	const [image, setImage] = useState(null)
 
 	const handleSave = async () => {
 		try {
-			const res = await axios.post("/church/save", formData)
+			await axios.post("/church/save", formData)
 			setError(false)
 		} catch (err) {
 			setError(true)
@@ -38,27 +48,85 @@ const ChurchAddEdit = () => {
 		}
 	}
 
+	const handleImage = (e) => {
+		console.log(e)
+		if (e.target.files && e.target.files[0]) {
+			setImage(URL.createObjectURL(e.target.files[0]))
+		}
+	}
 	return (
-		// <Box sx={{ mt: { xs: 10, lg: 20 } }}>
 		<STContainer>
-			{/* <Box m="auto" maxWidth={"lg"} p={5} boxShadow={3} borderRadius={2}> */}
-			<Grid item xs={12} lg={6}>
-				<Typography variant="h3" color="GrayText" pb={1}>
-					Add a new church
-				</Typography>
-				<Typography variant="body2" color="GrayText" py={2}>
-					Add new church details. Once you add the church you will see
-					as a list of churches when you login next time.
-				</Typography>
+			<Grid container sx={{ display: "flex" }}>
+				<Grid
+					item
+					xs={12}
+					lg={8}
+					sx={{ backgroundImage: `url(${image})` }}
+				>
+					<Typography variant="h3" color="GrayText">
+						Add a new church
+					</Typography>
+					<Typography variant="body2" color="GrayText" pb={5}>
+						Add new church details. Once you add the church you will
+						see as a list of churches when you login next time.
+					</Typography>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					lg={4}
+					display="flex"
+					sx={{ justifyContent: { xs: "center", lg: "flex-end" } }}
+				>
+					<Box
+						sx={{
+							border: "1px solid gray",
+							padding: 1,
+							borderRadius: 2,
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "center",
+							flexDirection: "column",
+							backgroundColor: "primary.light",
+							gap: 1,
+						}}
+					>
+						<img
+							src={image}
+							style={{
+								height: 200,
+								width: "auto",
+								borderRadius: 5,
+							}}
+						/>
+						<label htmlFor="icon-button-file">
+							<input
+								accept="image/*"
+								id="icon-button-file"
+								type="file"
+								style={{ display: "none" }}
+								onChange={handleImage}
+							/>
+							<IconButton
+								color="primary"
+								aria-label="upload picture"
+								component="span"
+							>
+								<PhotoCamera />
+							</IconButton>
+							Upload Picture
+						</label>
+					</Box>
+				</Grid>
 			</Grid>
-			<Grid container rowSpacing={2} columnSpacing={4}>
+			<Grid container rowSpacing={2} columnSpacing={4} mt={2}>
 				<Grid item xs={12}>
 					<TextField
 						fullWidth
 						id="churchname"
 						label="Church name"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.churchname || ""}
 						onChange={(e) =>
 							setFormData({
@@ -71,10 +139,12 @@ const ChurchAddEdit = () => {
 				<Grid item xs={12}>
 					<TextField
 						fullWidth
+						multiline
+						rows={4}
 						id="churchdesc"
 						label="Description/History of the Church"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.churchdesc || ""}
 						onChange={(e) =>
 							setFormData({
@@ -90,7 +160,7 @@ const ChurchAddEdit = () => {
 						id="address1"
 						label="Address1"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={
 							formData.address ? formData.address.address1 : ""
 						}
@@ -112,7 +182,7 @@ const ChurchAddEdit = () => {
 						label="Address2"
 						first
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={
 							formData.address ? formData.address.address2 : ""
 						}
@@ -133,7 +203,7 @@ const ChurchAddEdit = () => {
 						id="city"
 						label="City"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.address ? formData.address.city : ""}
 						onChange={(e) =>
 							setFormData({
@@ -152,7 +222,7 @@ const ChurchAddEdit = () => {
 						id="state"
 						label="State"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.address ? formData.address.state : ""}
 						onChange={(e) =>
 							setFormData({
@@ -172,7 +242,7 @@ const ChurchAddEdit = () => {
 						id="country"
 						label="Country"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.address ? formData.address.country : ""}
 						onChange={(e) =>
 							setFormData({
@@ -197,7 +267,7 @@ const ChurchAddEdit = () => {
 						id="phone1"
 						label="Phone1"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.address ? formData.address.phone1 : ""}
 						onChange={(e) =>
 							setFormData({
@@ -216,7 +286,7 @@ const ChurchAddEdit = () => {
 						id="phone2"
 						label="Phone2"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.address ? formData.address.phone2 : ""}
 						onChange={(e) =>
 							setFormData({
@@ -235,7 +305,7 @@ const ChurchAddEdit = () => {
 						id="email"
 						label="Email"
 						type="text"
-						variant="standard"
+						variant="filled"
 						value={formData.address ? formData.address.email : ""}
 						onChange={(e) =>
 							setFormData({
@@ -254,7 +324,7 @@ const ChurchAddEdit = () => {
 						id="startdate"
 						label="Start date"
 						type="date"
-						variant="standard"
+						variant="filled"
 						value={formData.startdate}
 						onChange={(e) =>
 							setFormData({
@@ -273,7 +343,7 @@ const ChurchAddEdit = () => {
 						id="enddate"
 						label="End date"
 						type="date"
-						variant="standard"
+						variant="filled"
 						value={formData.enddate}
 						onChange={(e) =>
 							setFormData({
@@ -293,30 +363,32 @@ const ChurchAddEdit = () => {
 					mt={3}
 					display="flex"
 					alignItems="center"
-					justifyContent="start"
+					justifyContent="flex-end"
 					xs={12}
 					md={12}
 				>
-					<Button variant="outlined" onClick={handleSave}>
-						Save
-					</Button>
-					<Button variant="outlined" sx={{ ml: 2 }}>
-						Cancel
-					</Button>
-					{error === true ? (
-						<Typography color="red" variant="body2" ml={2}>
+					{/* {error ? (
+						<Typography color="red" variant="body2" mr={2}>
 							Oops! something went wrong! Cannot save church.
 						</Typography>
 					) : (
-						<Typography color="Green" variant="body2" ml={2}>
+						<Typography color="Green" variant="body2" mr={2}>
 							Church added successfully!
 						</Typography>
-					)}
+					)} */}
+					<Button variant="outlined" onClick={handleSave}>
+						Save
+					</Button>
+					<Button
+						variant="outlined"
+						sx={{ ml: 2 }}
+						onClick={() => navigate("/home")}
+					>
+						Cancel
+					</Button>
 				</Grid>
 			</Grid>
-			{/* </Box> */}
 		</STContainer>
-		// </Box>
 	)
 }
 

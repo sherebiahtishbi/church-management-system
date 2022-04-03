@@ -7,6 +7,7 @@ const Container = styled("div")(({ theme }) => ({
 	display: "flex",
 	padding: 10,
 	fontSize: 14,
+	color: "GrayText",
 	"&:hover": {
 		backgroundColor: alpha(theme.palette.cmstexts.dark, 0.1),
 		cursor: "pointer",

@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { update } from "../redux/userSlice"
 
-//TODO remove the navbar
-
 const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -17,8 +15,6 @@ const Login = () => {
 	let navigate = useNavigate()
 
 	const handleLogin = async () => {
-		// console.log("Username : " + username)
-		// console.log("Password : " + password)
 		if (username && password) {
 			console.log("Credentials available!")
 			try {
