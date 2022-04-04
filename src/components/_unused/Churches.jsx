@@ -1,49 +1,28 @@
 //react imports
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 
 //mui imports
 import { Typography, Grid, Box, Button } from "@mui/material"
 
 //internal imports
-// import { apiRequest } from "../apirequests/baserequests"
-import axios from "axios"
-import ChurchCard from "../components/Church/ChurchCard"
-import nochurch from "../images/nochurch.png"
+import { getChurches } from "../churchlist/api/requests"
+import ChurchCard from "../churchlist/ChurchCard"
+import nochurch from "../../images/nochurch.png"
 
 const Churches = () => {
-	const [churches, setChurches] = useState([])
-	const [error, setError] = useState(false)
+	const dispatch = useDispatch()
+	const { churches, processing, error } = useSelector(
+		(state) => state.churchlist
+	)
+	const userinfo = useSelector((state) => state.login.userinfo)
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		const getChurches = async () => {
-			console.log("calling church api")
-			try {
-				const res = await axios.get("/church")
-				if (res.data) {
-					const dummy = {
-						_id: 9999,
-						churchname: "Add Church",
-						description:
-							"Add a new Church to manage its information.",
-						churchimg: nochurch,
-					}
-					console.log(res.data)
-					// setChurches(res.data)
-					const updatedchurches = [dummy, ...res.data]
-					console.log(updatedchurches)
-					setChurches(updatedchurches)
-					// console.log(churches)
-					setError(false)
-				}
-			} catch (err) {
-				setError(true)
-				console.log(err)
-			}
-		}
-		getChurches()
-	}, [])
+		getChurches(userinfo.accountid, dispatch)
+	}, [dispatch])
+
 	return (
 		<>
 			<Grid container spacing={2} sx={{ mt: 8 }}>

@@ -1,49 +1,28 @@
 import { Button, Grid, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { update } from "../redux/userSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { loginUser } from "./api/requests"
 
 const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
-	const [error, setError] = useState(false)
-	const dispath = useDispatch()
+	const error = useSelector((state) => state.login.error)
+	const dispatch = useDispatch()
 
 	let navigate = useNavigate()
 
-	const handleLogin = async () => {
+	const handleLogin = (e) => {
+		e.preventDefault()
 		if (username && password) {
 			console.log("Credentials available!")
 			try {
-				const res = await axios.post("/auth/login", {
-					username: username,
-					password: password,
-				})
-				if (res.status === 200) {
-					console.log(res.data)
-					setError(false)
-					dispath(
-						update({
-							userid: res.data.userid,
-							username: res.data.username,
-							accountid: res.data.accountid,
-							roles: res.data.roles,
-						})
-					)
-					console.log("Login successfully!")
-					navigate("/home")
-				} else {
-					setError(true)
-				}
-			} catch (err) {
-				setError(true)
-				console.log(err)
-			}
+				loginUser(username, password, dispatch)
+				console.log("Login successfully!")
+				navigate("/home")
+			} catch (err) {}
 		} else {
-			setError(true)
 		}
 	}
 

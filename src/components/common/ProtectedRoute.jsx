@@ -2,12 +2,12 @@ import { Navigate, Outlet } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const ProtectedRoute = ({ children }) => {
-	const username = useSelector((state) => {
-		console.log(state.user)
-		return state.user.userinfo.userid
+	const { userid } = useSelector((state) => {
+		console.log(state.login)
+		return state.login.userinfo
 	})
 
-	if (!username) {
+	if (!userid) {
 		return <Navigate to="/unauthorized" replace />
 	}
 	return children ? children : <Outlet />

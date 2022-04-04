@@ -14,19 +14,26 @@ const Upload = () => {
 	}
 	return (
 		<Box
-			display="flex"
-			flexDirection="column"
-			alignItems="center"
-			justifyContent="center"
-			borderRadius={2}
-			padding={2}
 			sx={{
-				"&:hover": {
-					boxShadow: 4,
-				},
+				border: "1px solid gray",
+				padding: 1,
+				borderRadius: 2,
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+				flexDirection: "column",
+				backgroundColor: "#f5f5f5",
+				gap: 1,
 			}}
-			backgroundImage={image}
 		>
+			<img
+				src={image}
+				style={{
+					height: 200,
+					width: "auto",
+					borderRadius: 5,
+				}}
+			/>
 			<label htmlFor="icon-button-file">
 				<input
 					accept="image/*"
@@ -42,22 +49,8 @@ const Upload = () => {
 				>
 					<PhotoCamera />
 				</IconButton>
+				Upload Picture
 			</label>
-			{/* <input
-				accept="image/*"
-				id="icon-button-file"
-				type="file"
-				style={{ display: "none" }}
-				onChange={handleImage}
-			/>
-			<span style={{ color: "GrayText" }}>Upload Picture</span>
-			<IconButton
-				color="primary"
-				aria-label="upload picture"
-				component="span"
-			>
-				<PhotoCamera />
-			</IconButton> */}
 		</Box>
 	)
 }

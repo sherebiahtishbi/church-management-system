@@ -84,7 +84,7 @@ const Home = () => {
 				<MainArea>
 					<Outlet />
 				</MainArea>
-				<RightBar></RightBar>
+				{/* <RightBar></RightBar> */}
 			</Wrapper>
 		</Container>
 	)
