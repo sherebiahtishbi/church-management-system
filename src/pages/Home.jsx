@@ -47,6 +47,7 @@ const MainArea = styled("div")(({ theme }) => ({
 	[theme.breakpoints.down("lg")]: {
 		flex: 1,
 	},
+	padding: 15,
 }))
 
 const RightBar = styled("div")(({ theme }) => ({

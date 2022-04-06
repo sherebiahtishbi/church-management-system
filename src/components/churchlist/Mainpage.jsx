@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material"
+import { Box, Grid, Typography } from "@mui/material"
 import { styled } from "@mui/system"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -33,7 +33,20 @@ const Mainpage = () => {
 					})}
 				</Grid>
 			) : (
-				<Typography>No Church available!</Typography>
+				<Box
+					display="flex"
+					flex={1}
+					alignItems="center"
+					justifyContent="center"
+				>
+					<Typography
+						variant="h3"
+						color="secondary.dark"
+						fontWeight="500"
+					>
+						No Church available!
+					</Typography>
+				</Box>
 			)}
 		</Container>
 	)

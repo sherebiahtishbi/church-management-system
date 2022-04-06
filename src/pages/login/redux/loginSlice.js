@@ -8,6 +8,7 @@ const loginSlice = createSlice({
 			username: "",
 			accountid: "",
 			roles: [],
+			token: "",
 		},
 		processing: false,
 		error: false,

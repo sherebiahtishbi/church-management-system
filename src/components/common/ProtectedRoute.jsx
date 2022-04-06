@@ -1,13 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 const ProtectedRoute = ({ children }) => {
-	const { userid } = useSelector((state) => {
-		console.log(state.login)
-		return state.login.userinfo
-	})
+	const token = localStorage.getItem("_cms_tk")
+	console.log(token)
 
-	if (!userid) {
+	if (!token) {
 		return <Navigate to="/unauthorized" replace />
 	}
 	return children ? children : <Outlet />

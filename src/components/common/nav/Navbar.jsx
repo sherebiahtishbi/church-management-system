@@ -1,5 +1,5 @@
 import { Church, Notifications, Search } from "@mui/icons-material"
-import { Badge, styled } from "@mui/material"
+import { Badge, IconButton, styled } from "@mui/material"
 import { grey } from "@mui/material/colors"
 import STUserMenu from "./STUserMenu"
 
@@ -89,7 +89,9 @@ const Navbar = () => {
 			</Left>
 			<Center>
 				<SearchBar placeholder="Search..." />
-				<Search />
+				<IconButton>
+					<Search />
+				</IconButton>
 			</Center>
 			<Right>
 				<Badge badgeContent={4} color="secondary">

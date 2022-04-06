@@ -13,7 +13,7 @@ const Login = () => {
 
 	let navigate = useNavigate()
 
-	const handleLogin = (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault()
 		if (username && password) {
 			console.log("Credentials available!")

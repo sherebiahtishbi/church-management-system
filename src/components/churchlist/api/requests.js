@@ -3,7 +3,7 @@ import {
 	getChurchesSuccess,
 	getChurchesFailure,
 } from "../redux/churchListSlice"
-import { apiRequest } from "../../../utils/util"
+import { secureApiRequest as api } from "../../../utils/util"
 import dummychurch from "../../../dataobjects/dummies"
 
 // get all churches from db for an account
@@ -11,7 +11,7 @@ export const getChurches = async (accountid, dummy = false, dispatch) => {
 	let updatedchurches
 	dispatch(getChurchesStart())
 	try {
-		const res = await apiRequest.get("/churches/")
+		const res = await api.get("/churches/")
 		if (dummy) {
 			updatedchurches = [dummy, ...res.data]
 		}
