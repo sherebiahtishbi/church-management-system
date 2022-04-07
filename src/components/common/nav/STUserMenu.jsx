@@ -11,10 +11,13 @@ import PersonAdd from "@mui/icons-material/PersonAdd"
 import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
 import { useState } from "react"
+import useLogout from "../../../hooks/useLogout"
 
 const STUserMenu = () => {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
+	const logout = useLogout()
+
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget)
 	}
@@ -99,7 +102,11 @@ const STUserMenu = () => {
 					</ListItemIcon>
 					Settings
 				</MenuItem>
-				<MenuItem>
+				<MenuItem
+					onClick={() => {
+						logout()
+					}}
+				>
 					<ListItemIcon>
 						<Logout fontSize="small" />
 					</ListItemIcon>

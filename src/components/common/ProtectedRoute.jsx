@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
 
 const ProtectedRoute = ({ children }) => {
-	const token = localStorage.getItem("_cms_tk")
-	console.log(token)
-
-	if (!token) {
+	const { user } = useAuth()
+	if (!user) {
 		return <Navigate to="/unauthorized" replace />
 	}
 	return children ? children : <Outlet />

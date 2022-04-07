@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const churchListSlice = createSlice({
 	name: "church",
 	initialState: {
-		churches: [],
+		churches: {},
 		processing: false,
 		error: false,
 	},
@@ -15,7 +15,7 @@ const churchListSlice = createSlice({
 			state.error = false
 		},
 		getChurchesSuccess: (state, action) => {
-			state.churches.push(action.payload)
+			state.churches = action.payload
 			state.processing = false
 			state.error = false
 		},

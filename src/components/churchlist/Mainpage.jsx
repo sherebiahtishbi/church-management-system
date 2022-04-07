@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getChurches } from "./api/requests"
 import ChurchCard from "./ChurchCard"
+import useAuth from "../../hooks/useAuth"
 
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
@@ -14,6 +15,7 @@ const Container = styled("div")(({ theme }) => ({
 
 const Mainpage = () => {
 	const dispatch = useDispatch()
+	const { user } = useAuth()
 	const { churches, processing, error } = useSelector(
 		(state) => state.churchlist
 	)
@@ -21,9 +23,11 @@ const Mainpage = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		getChurches(userinfo.accountid, true, dispatch)
+		console.log(user)
+		getChurches(user.user.accountid, true, user.token, dispatch)
 	}, [dispatch])
 
+	console.log(churches)
 	return (
 		<Container>
 			{churches.length > 0 ? (
