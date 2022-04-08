@@ -14,6 +14,7 @@ import Navbar from "../components/common/nav/Navbar"
 import STMenuItem from "../components/common/STMenuItem"
 import { alpha } from "@mui/material"
 import { Outlet } from "react-router-dom"
+import { calculateNewValue } from "@testing-library/user-event/dist/utils"
 
 const Container = styled("div")(({ theme }) => ({
 	height: "100vh",
@@ -24,15 +25,20 @@ const Wrapper = styled("div")(({ theme }) => ({
 	display: "flex",
 	[theme.breakpoints.down("lg")]: {
 		flexDirection: "column",
+		padding: 15,
+	},
+	[theme.breakpoints.down("sm")]: {
+		flexDirection: "column",
+		padding: 10,
 	},
 }))
 
 const LeftBar = styled("div")(({ theme }) => ({
 	height: "100%",
 	flex: 1,
-	[theme.breakpoints.down("lg")]: {
-		flex: 1,
-	},
+	// [theme.breakpoints.down("lg")]: {
+	// 	flex: 1,
+	// },
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "flex-start",
@@ -44,10 +50,11 @@ const LeftBar = styled("div")(({ theme }) => ({
 const MainArea = styled("div")(({ theme }) => ({
 	height: "100%",
 	flex: 8,
+	padding: 5,
 	[theme.breakpoints.down("lg")]: {
 		flex: 1,
+		padding: 5,
 	},
-	padding: 15,
 }))
 
 const RightBar = styled("div")(({ theme }) => ({

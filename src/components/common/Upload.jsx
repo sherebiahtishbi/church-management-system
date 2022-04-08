@@ -1,5 +1,5 @@
 import { PhotoCamera } from "@mui/icons-material"
-import { Box, IconButton } from "@mui/material"
+import { Grid, IconButton } from "@mui/material"
 import React, { useState } from "react"
 
 const Upload = () => {
@@ -13,45 +13,59 @@ const Upload = () => {
 		}
 	}
 	return (
-		<Box
+		<Grid
+			Container
 			sx={{
-				border: "1px solid gray",
-				padding: 1,
-				borderRadius: 2,
+				height: "50%",
+				// marginTop: 25,
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
 				flexDirection: "column",
-				backgroundColor: "#f5f5f5",
-				gap: 1,
+
+				flex: 1,
+				// gap: 1,
 			}}
 		>
-			<img
-				src={image}
-				style={{
-					height: 200,
-					width: "auto",
-					borderRadius: 5,
+			<Grid
+				item
+				sx={{
+					borderRadius: 2,
+					backgroundColor: "primary.light",
 				}}
-			/>
-			<label htmlFor="icon-button-file">
-				<input
-					accept="image/*"
-					id="icon-button-file"
-					type="file"
-					style={{ display: "none" }}
-					onChange={handleImage}
+			>
+				<img
+					src={image}
+					style={{
+						height: "auto",
+						width: "100%",
+						borderRadius: 5,
+						objectFit: "contain",
+						padding: 5,
+					}}
 				/>
-				<IconButton
-					color="primary"
-					aria-label="upload picture"
-					component="span"
-				>
-					<PhotoCamera />
-				</IconButton>
-				Upload Picture
-			</label>
-		</Box>
+			</Grid>
+			<Grid item>
+				<label htmlFor="icon-button-file">
+					<input
+						accept="image/*"
+						id="icon-button-file"
+						type="file"
+						style={{ display: "none" }}
+						onChange={handleImage}
+					/>
+					<IconButton
+						color="primary"
+						aria-label="upload picture"
+						component="span"
+						style={{ marginTop: 2 }}
+					>
+						<PhotoCamera />
+					</IconButton>
+					Upload Image
+				</label>
+			</Grid>
+		</Grid>
 	)
 }
 

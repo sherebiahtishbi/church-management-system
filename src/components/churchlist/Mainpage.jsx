@@ -1,11 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material"
 import { styled } from "@mui/system"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { getChurches } from "./api/requests"
 import ChurchCard from "./ChurchCard"
-import useAuth from "../../hooks/useAuth"
 
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
@@ -15,19 +13,21 @@ const Container = styled("div")(({ theme }) => ({
 
 const Mainpage = () => {
 	const dispatch = useDispatch()
-	const { user } = useAuth()
+
+	//get churches from the store
 	const { churches, processing, error } = useSelector(
 		(state) => state.churchlist
 	)
-	const userinfo = useSelector((state) => state.login.userinfo)
-	const navigate = useNavigate()
+
+	//get currentuser from the store
+	const userinfo = useSelector((state) => state.auth.userinfo)
 
 	useEffect(() => {
-		console.log(user)
-		getChurches(user.user.accountid, true, user.token, dispatch)
+		// console.log(userinfo)
+		getChurches(userinfo.user.accountid, true, userinfo.token, dispatch)
 	}, [dispatch])
 
-	console.log(churches)
+	// console.log(churches)
 	return (
 		<Container>
 			{churches.length > 0 ? (

@@ -40,7 +40,7 @@ const TitleSm = styled("h4")(({ theme }) => ({
 	fontWeight: 700,
 	color: theme.palette.cmstexts.dark,
 	display: "none",
-	[theme.breakpoints.down("lg")]: {
+	[theme.breakpoints.down("md")]: {
 		display: "flex",
 		marginRight: 5,
 	},

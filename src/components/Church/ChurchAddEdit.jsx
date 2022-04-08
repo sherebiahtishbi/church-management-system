@@ -18,13 +18,16 @@ const STContainer = styled("div")(({ theme }) => ({
 	width: "100%",
 	padding: 30,
 	[theme.breakpoints.down("lg")]: {
-		padding: 10,
+		padding: 0,
+	},
+	[theme.breakpoints.down("sm")]: {
+		padding: 0,
 	},
 }))
 
 const ChurchAddEdit = () => {
 	const navigate = useNavigate()
-	const user = useSelector((state) => state.user.userinfo)
+	const user = useSelector((state) => state.auth.userinfo)
 	const dispatch = useDispatch()
 	const [error, setError] = useState(null)
 	const [formData, setFormData] = useState({
@@ -63,41 +66,40 @@ const ChurchAddEdit = () => {
 							will see as a list of churches when you login next
 							time.
 						</Typography>
+						<ChurchForm formata={formData} />
+						<Box
+							sx={{
+								display: "flex",
+								justifyContent: {
+									xs: "center",
+									lg: "flex-end",
+								},
+							}}
+						>
+							<Button variant="contained" onClick={handleSave}>
+								Save
+							</Button>
+							<Button
+								variant="contained"
+								sx={{ ml: 2 }}
+								onClick={() => navigate("/home")}
+							>
+								Cancel
+							</Button>
+						</Box>
 					</Grid>
 					<Grid
 						item
 						xs={12}
 						lg={4}
 						display="flex"
-						sx={{
-							justifyContent: { xs: "center", lg: "flex-end" },
-						}}
+						padding={2}
+						alignItems="center"
+						justifyContent="center"
 					>
 						<Upload />
 					</Grid>
 				</Grid>
-				<ChurchForm formata={formData} />
-				<Box>
-					{/* {error ? (
-						<Typography color="red" variant="body2" mr={2}>
-						Oops! something went wrong! Cannot save church.
-						</Typography>
-						) : (
-							<Typography color="Green" variant="body2" mr={2}>
-							Church added successfully!
-						</Typography>
-					)} */}
-					<Button variant="contained" onClick={handleSave}>
-						Save
-					</Button>
-					<Button
-						variant="contained"
-						sx={{ ml: 2 }}
-						onClick={() => navigate("/home")}
-					>
-						Cancel
-					</Button>
-				</Box>
 			</STContainer>
 		</Grid>
 	)

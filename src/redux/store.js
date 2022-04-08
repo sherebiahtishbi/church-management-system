@@ -5,7 +5,7 @@ import loginReducer from "../pages/login/redux/loginSlice"
 
 export default configureStore({
 	reducer: {
-		login: loginReducer,
+		auth: loginReducer,
 		church: churchReducer,
 		churchlist: churchListReducer,
 	},
