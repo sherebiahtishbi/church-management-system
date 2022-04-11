@@ -3,8 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { countries } from "../../dataobjects/countries"
 
-const ChurchForm = ({ formdata, handleSave }) => {
-	const [formData, setFormData] = useState({})
+const ChurchForm = ({ formdata, setformdata }) => {
 	const navigate = useNavigate()
 	return (
 		<Grid container rowSpacing={2} columnSpacing={4} mt={2}>
@@ -15,10 +14,10 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Church name"
 					type="text"
 					variant="filled"
-					value={formData.churchname || ""}
+					value={formdata.churchname || ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							churchname: e.target.value,
 						})
 					}
@@ -33,10 +32,10 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Description/History of the Church"
 					type="text"
 					variant="filled"
-					value={formData.churchdesc || ""}
+					value={formdata.churchdesc || ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							churchdesc: e.target.value,
 						})
 					}
@@ -49,12 +48,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Address1"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.address1 : ""}
+					value={formdata.address ? formdata.address.address1 : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								address1: e.target.value,
 							},
 						})
@@ -69,12 +68,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					first
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.address2 : ""}
+					value={formdata.address ? formdata.address.address2 : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								address2: e.target.value,
 							},
 						})
@@ -88,12 +87,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="City"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.city : ""}
+					value={formdata.address ? formdata.address.city : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								city: e.target.value,
 							},
 						})
@@ -107,12 +106,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="State"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.state : ""}
+					value={formdata.address ? formdata.address.state : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								state: e.target.value,
 							},
 						})
@@ -127,12 +126,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Country"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.country : ""}
+					value={formdata.address ? formdata.address.country : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								country: e.target.value,
 							},
 						})
@@ -150,12 +149,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Phone1"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.phone1 : ""}
+					value={formdata.address ? formdata.address.phone1 : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								phone1: e.target.value,
 							},
 						})
@@ -169,12 +168,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Phone2"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.phone2 : ""}
+					value={formdata.address ? formdata.address.phone2 : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								phone2: e.target.value,
 							},
 						})
@@ -188,12 +187,12 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Email"
 					type="text"
 					variant="filled"
-					value={formData.address ? formData.address.email : ""}
+					value={formdata.address ? formdata.address.email : ""}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							address: {
-								...formData.address,
+								...formdata.address,
 								email: e.target.value,
 							},
 						})
@@ -207,10 +206,10 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="Start date"
 					type="date"
 					variant="filled"
-					value={formData.startdate}
+					value={formdata.startdate}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							startdate: e.target.value,
 						})
 					}
@@ -226,10 +225,10 @@ const ChurchForm = ({ formdata, handleSave }) => {
 					label="End date"
 					type="date"
 					variant="filled"
-					value={formData.enddate}
+					value={formdata.enddate}
 					onChange={(e) =>
-						setFormData({
-							...formData,
+						setformdata({
+							...formdata,
 							enddate: e.target.value,
 						})
 					}

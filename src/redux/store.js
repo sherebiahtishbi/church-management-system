@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
-import churchReducer from "../components/Church/redux/churchSlice"
-import churchListReducer from "../components/churchlist/redux/churchListSlice"
-import loginReducer from "../pages/login/redux/loginSlice"
+import churchReducer from "../redux/slices/churchSlice"
+import loginReducer from "../redux/slices/loginSlice"
 
 export default configureStore({
 	reducer: {
 		auth: loginReducer,
 		church: churchReducer,
-		churchlist: churchListReducer,
 	},
 })

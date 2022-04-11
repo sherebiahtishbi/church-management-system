@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const churchSlice = createSlice({
 	name: "church",
 	initialState: {
-		churches: [],
+		churches: {},
 		processing: false,
 		error: false,
 	},
@@ -15,7 +15,7 @@ const churchSlice = createSlice({
 			state.error = false
 		},
 		getChurchesSuccess: (state, action) => {
-			state.churches.push(action.payload)
+			state.churches = action.payload
 			state.processing = false
 			state.error = false
 		},
@@ -25,28 +25,19 @@ const churchSlice = createSlice({
 		},
 
 		//save church
-		saveChurchStart: (state, action) => {
+		saveChurchStart: (state) => {
 			state.processing = true
 			state.error = false
 		},
 		saveChurchSuccess: (state, action) => {
+			console.log(action.payload)
 			state.churches.push(action.payload)
 			state.processing = false
 			state.error = false
 		},
-		saveChurchFailure: (state, action) => {
+		saveChurchFailure: (state) => {
 			state.error = true
 			state.processing = false
-		},
-
-		//update church
-		update: (state, action) => {
-			state.churchinfo = action.payload
-		},
-
-		//delete church
-		remove: (state) => {
-			state.userinfo = {}
 		},
 	},
 })
@@ -58,7 +49,5 @@ export const {
 	saveChurchStart,
 	saveChurchSuccess,
 	saveChurchFailure,
-	update,
-	remove,
 } = churchSlice.actions
 export default churchSlice.reducer

@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from "@mui/material"
 import { styled } from "@mui/system"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getChurches } from "./api/requests"
+import { getChurches } from "../../redux/actions/churchActions"
 import ChurchCard from "./ChurchCard"
 
 const Container = styled("div")(({ theme }) => ({
@@ -15,9 +15,7 @@ const Mainpage = () => {
 	const dispatch = useDispatch()
 
 	//get churches from the store
-	const { churches, processing, error } = useSelector(
-		(state) => state.churchlist
-	)
+	const { churches, processing, error } = useSelector((state) => state.church)
 
 	//get currentuser from the store
 	const userinfo = useSelector((state) => state.auth.userinfo)
@@ -27,7 +25,7 @@ const Mainpage = () => {
 		getChurches(userinfo.user.accountid, true, userinfo.token, dispatch)
 	}, [dispatch])
 
-	// console.log(churches)
+	console.log(churches)
 	return (
 		<Container>
 			{churches.length > 0 ? (

@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom"
 //application imports
 import Upload from "../common/Upload"
 import ChurchForm from "./ChurchForm"
-import { createChurch } from "./api/requests"
+import { createChurch } from "../../redux/actions/churchActions"
+// import useUpload from "../../hooks/useUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -25,21 +26,33 @@ const STContainer = styled("div")(({ theme }) => ({
 	},
 }))
 
+const ButtonContainer = styled("div")(({ theme }) => ({
+	display: "flex",
+	[theme.breakpoints.up("lg")]: {
+		justifyContent: "flex-end",
+	},
+	[theme.breakpoints.down("md")]: {
+		justifyContent: "center",
+	},
+}))
+
 const ChurchAddEdit = () => {
 	const navigate = useNavigate()
-	const user = useSelector((state) => state.auth.userinfo)
+	const userinfo = useSelector((state) => state.auth.userinfo)
 	const dispatch = useDispatch()
+	// const fileUpoad = useUpload()
 	const [error, setError] = useState(null)
 	const [formData, setFormData] = useState({
-		userid: user.userid,
-		accountid: user.accountid,
+		userid: userinfo.user.userid,
+		accountid: userinfo.user.accountid,
 	})
 	const [image, setImage] = useState(null)
 
 	const handleSave = async () => {
+		// const { progress, url, error } = fileUpoad(image)
 		try {
-			dispatch(createChurch(formData))
-			// await axios.post("/church/save", formData)
+			console.log(formData)
+			await createChurch(formData, userinfo.token, dispatch)
 			setError(false)
 		} catch (err) {
 			setError(true)
@@ -47,12 +60,6 @@ const ChurchAddEdit = () => {
 		}
 	}
 
-	const handleImage = (e) => {
-		console.log(e)
-		if (e.target.files && e.target.files[0]) {
-			setImage(URL.createObjectURL(e.target.files[0]))
-		}
-	}
 	return (
 		<Grid container>
 			<STContainer>
@@ -66,8 +73,11 @@ const ChurchAddEdit = () => {
 							will see as a list of churches when you login next
 							time.
 						</Typography>
-						<ChurchForm formata={formData} />
-						<Box
+						<ChurchForm
+							formdata={formData}
+							setformdata={setFormData}
+						/>
+						{/* <Box
 							sx={{
 								display: "flex",
 								justifyContent: {
@@ -75,7 +85,8 @@ const ChurchAddEdit = () => {
 									lg: "flex-end",
 								},
 							}}
-						>
+						> */}
+						<ButtonContainer>
 							<Button variant="contained" onClick={handleSave}>
 								Save
 							</Button>
@@ -86,7 +97,8 @@ const ChurchAddEdit = () => {
 							>
 								Cancel
 							</Button>
-						</Box>
+						</ButtonContainer>
+						{/* </Box> */}
 					</Grid>
 					<Grid
 						item

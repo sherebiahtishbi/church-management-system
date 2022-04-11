@@ -6,8 +6,8 @@ import {
 	logoutSuccess,
 	logoutFailure,
 } from "../redux/loginSlice"
-import { publicApiRequest as api } from "../../../utils/util"
-import useAuth from "../../../hooks/useAuth"
+import { publicApiRequest as api } from "../../utils/util"
+import useAuth from "../../hooks/useAuth"
 
 // User CRUD requests
 // get all users from db for an account

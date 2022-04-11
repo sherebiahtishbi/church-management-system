@@ -3,7 +3,7 @@ import {
 	loginStart,
 	loginSuccess,
 	loginFailure,
-} from "../pages/login/redux/loginSlice"
+} from "../redux/slices/loginSlice"
 import { useDispatch } from "react-redux"
 
 import { publicApiRequest as api } from "../utils/util"
