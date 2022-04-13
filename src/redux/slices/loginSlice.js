@@ -24,6 +24,7 @@ const loginSlice = createSlice({
 			console.log(action.payload)
 			state.userinfo = action.payload
 			state.error = false
+			state.processing = true
 		},
 		loginFailure: (state) => {
 			state.processing = false

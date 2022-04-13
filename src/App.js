@@ -8,9 +8,12 @@ import ChurchAddEdit from "./components/church/ChurchAddEdit"
 import Unauthorized from "./components/common/Unauthorized"
 import Logout from "./pages/Logout"
 import Pagenotfound from "./pages/Pagenotfound"
-import Home from "./pages/Home"
+// import Home from "./pages/Home"
 import Mainpage from "./components/churchlist/Mainpage"
 import { CssBaseline } from "@mui/material"
+
+import { HomeLayout } from "./components/layouts"
+import ChurchLayout from "./components/layouts/ChurchLayout"
 
 function App() {
 	return (
@@ -19,7 +22,14 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Login />} />
-					<Route path="/home" element={<Home />}>
+					<Route
+						path="/home"
+						element={
+							<ProtectedRoute>
+								<HomeLayout />
+							</ProtectedRoute>
+						}
+					>
 						<Route
 							index
 							element={
@@ -28,8 +38,21 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
+					</Route>
+					<Route path="/logout" element={<Logout />} />
+					<Route path="/unauthorized" element={<Unauthorized />} />
+					<Route path="/accounts" element={<Register />} />
+					<Route path="/churches" element={<ChurchLayout />}>
 						<Route
-							path="addchurch"
+							path="add"
+							element={
+								<ProtectedRoute>
+									<ChurchAddEdit />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="edit/:id"
 							element={
 								<ProtectedRoute>
 									<ChurchAddEdit />
@@ -37,17 +60,6 @@ function App() {
 							}
 						/>
 					</Route>
-					<Route path="/logout" element={<Logout />} />
-					<Route path="/unauthorized" element={<Unauthorized />} />
-					<Route path="/accounts" element={<Register />} />
-					<Route
-						path="/churches/add"
-						element={
-							<ProtectedRoute>
-								<ChurchAddEdit />
-							</ProtectedRoute>
-						}
-					/>
 					<Route path="*" element={<Pagenotfound />} />
 				</Routes>
 			</Router>

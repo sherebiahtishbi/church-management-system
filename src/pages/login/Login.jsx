@@ -2,13 +2,15 @@ import { Button, Grid, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import useLogin from "../../hooks/useLogin"
+// import useLogin from "../../hooks/useLogin"
+import { loginUser } from "../../redux/actions/authActions"
+import { useDispatch } from "react-redux"
 
 const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState(false)
-	const login = useLogin()
+	const dispatch = useDispatch()
 
 	let navigate = useNavigate()
 
@@ -17,7 +19,7 @@ const Login = () => {
 		if (username && password) {
 			console.log("Credentials available!")
 			try {
-				const res = await login({ username, password })
+				const res = await loginUser(username, password, dispatch)
 				console.log("Login successful!")
 				navigate("/home")
 			} catch (err) {

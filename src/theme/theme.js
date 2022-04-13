@@ -19,8 +19,12 @@ const theme = createTheme({
 			contrastText: "#000000",
 		},
 		mode: "light",
-		cmstexts: {
-			dark: grey[800],
+		cms: {
+			textLight: grey[600],
+			textDark: grey[900],
+			menu: grey[800],
+			menuHover: grey[900],
+			menuUnderline: grey[300],
 		},
 	},
 })

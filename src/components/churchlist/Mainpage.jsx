@@ -8,7 +8,21 @@ import ChurchCard from "./ChurchCard"
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
 	display: "flex",
-	marginLeft: 25,
+	justifyContent: "center",
+	paddingLeft: 25,
+	paddingRight: 25,
+}))
+
+const InfoSection = styled("div")(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	gap: 10,
+	paddingTop: 4,
+	paddingBottom: 4,
+}))
+
+const SubInfo = styled("div")(({ theme }) => ({
+	color: theme.palette.cms.textLight,
 }))
 
 const Mainpage = () => {
@@ -22,18 +36,33 @@ const Mainpage = () => {
 
 	useEffect(() => {
 		// console.log(userinfo)
-		getChurches(userinfo.user.accountid, true, userinfo.token, dispatch)
-	}, [dispatch])
+		getChurches(userinfo.accountid, true, dispatch)
+	}, [])
 
-	console.log(churches)
+	// console.log(churches)
 	return (
 		<Container>
 			{churches.length > 0 ? (
-				<Grid container spacing={2} mt={1}>
-					{churches.map((church) => {
-						return <ChurchCard key={church._id} church={church} />
-					})}
-				</Grid>
+				<Box paddingTop={4}>
+					<InfoSection>
+						<Typography variant="h5" color="cms.textLight">
+							Below are the list of churches in your account which
+							you can manage.
+						</Typography>
+						<SubInfo>
+							You can add new churches, manage the data of
+							existing church like pastor's information, member's
+							information, donations, events and much more.
+						</SubInfo>
+					</InfoSection>
+					<Grid container spacing={2} mt={1}>
+						{churches.map((church) => {
+							return (
+								<ChurchCard key={church._id} church={church} />
+							)
+						})}
+					</Grid>
+				</Box>
 			) : (
 				<Box
 					display="flex"

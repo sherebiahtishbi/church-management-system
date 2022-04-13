@@ -39,6 +39,26 @@ const churchSlice = createSlice({
 			state.error = true
 			state.processing = false
 		},
+
+		//update church
+		updateChurchStart: (state) => {
+			state.processing = true
+			state.error = false
+		},
+		updateChurchSuccess: (state, action) => {
+			console.log(action.payload)
+			const filtered = state.churches.filter(
+				(c) => c._id !== action.payload._id
+			)
+			state.churches = { filtered, ...action.payload }
+			console.log(state.churches)
+			state.processing = false
+			state.error = false
+		},
+		updateChurchFailure: (state) => {
+			state.error = true
+			state.processing = false
+		},
 	},
 })
 

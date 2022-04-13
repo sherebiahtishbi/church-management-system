@@ -5,9 +5,9 @@ import {
 	logoutStart,
 	logoutSuccess,
 	logoutFailure,
-} from "../redux/loginSlice"
-import { publicApiRequest as api } from "../../utils/util"
-import useAuth from "../../hooks/useAuth"
+} from "../slices/loginSlice"
+import { apiRequest as api } from "../../utils/util"
+// import useAuth from "../../hooks/useAuth"
 
 // User CRUD requests
 // get all users from db for an account
@@ -19,8 +19,8 @@ export const loginUser = async (username, password, dispatch) => {
 			username: username,
 			password: password,
 		})
-		// console.log(res.data.token)
-		localStorage.setItem("_cms_tk", res.data.token)
+		console.log(res.data)
+		localStorage.setItem("_cms_tk", JSON.stringify(res.data))
 		dispatch(loginSuccess(res.data.user))
 	} catch (err) {
 		console.log(err)
@@ -35,5 +35,7 @@ export const logoutUser = async (dispatch) => {
 		dispatch(logoutSuccess())
 	} catch (err) {
 		dispatch(logoutFailure())
+	} finally {
+		localStorage.clear()
 	}
 }

@@ -1,106 +1,175 @@
-import { Church, Notifications, Search } from "@mui/icons-material"
-import { Badge, IconButton, styled } from "@mui/material"
-import { grey } from "@mui/material/colors"
-import STUserMenu from "./STUserMenu"
+import { Edit, Logout, PersonAdd, Settings } from "@mui/icons-material"
+import {
+	AppBar,
+	Avatar,
+	Box,
+	Button,
+	Divider,
+	IconButton,
+	Link,
+	ListItemIcon,
+	Menu,
+	MenuItem,
+	styled,
+	Toolbar,
+	Typography,
+} from "@mui/material"
+import { useState } from "react"
+import { Outlet, useNavigate } from "react-router-dom"
+import userimg from "../../../images/anu_profile.jpg"
+import { logoutUser } from "../../../redux/actions/authActions"
+import { useDispatch } from "react-redux"
 
-const Container = styled("div")(({ theme }) => ({
-	height: 60,
-	backgroundColor: theme.palette.primary.main,
+const WebTitle = styled(Typography)(({ theme }) => ({
+	flexGrow: 1,
+	fontWeight: 600,
 	display: "flex",
-	alignItems: "center",
-	justifyContent: "space-between",
+	color: theme.palette.cms.textDark,
+	[theme.breakpoints.down("lg")]: {
+		display: "none",
+	},
+}))
+
+const MobileTitle = styled(Typography)(({ theme }) => ({
+	flexGrow: 1,
+	fontWeight: 600,
+	display: "flex",
+	[theme.breakpoints.up("lg")]: {
+		display: "none",
+	},
+}))
+
+const NavbarMenu = styled(Box)(({ theme }) => ({
+	display: "flex",
+}))
+
+const NavbarMenuItem = styled("div")(({ theme }) => ({
 	paddingLeft: 10,
 	paddingRight: 10,
-	borderBottom: 0.5,
-	borderBottomColor: grey[300],
-	borderBottomStyle: "solid",
-	position: "sticky",
-	top: 0,
-}))
-
-const Left = styled("div")(({ theme }) => ({
-	display: "flex",
-	flex: 1,
-	alignItems: "center",
-	gap: 10,
-}))
-
-const TitleLg = styled("h4")(({ theme }) => ({
-	fontSize: "2rem",
-	fontWeight: 700,
-	color: theme.palette.cmstexts.dark,
-	display: "none",
-	[theme.breakpoints.up("lg")]: {
-		display: "flex",
-	},
-}))
-
-const TitleSm = styled("h4")(({ theme }) => ({
-	fontSize: "2rem",
-	fontWeight: 700,
-	color: theme.palette.cmstexts.dark,
-	display: "none",
-	[theme.breakpoints.down("md")]: {
-		display: "flex",
-		marginRight: 5,
-	},
-}))
-
-const Center = styled("div")(({ theme }) => ({
-	display: "flex",
-	flex: 1,
-	alignItems: "center",
-	justifyContent: "center",
-	backgroundColor: theme.palette.primary.light,
-	borderRadius: 5,
-	paddingRight: 5,
-}))
-
-const SearchBar = styled("input")(({ theme }) => ({
-	display: "flex",
-	flex: 1,
-	border: "none",
-	borderRadius: 5,
-	padding: 12,
-	alignItems: "center",
-	backgroundColor: "transparent",
+	paddingTop: 20,
+	paddingBottom: 10,
+	cursor: "pointer",
+	fontWeight: 400,
 	fontSize: 16,
+	[theme.breakpoints.down("md")]: {
+		display: "none",
+	},
+	borderBottom: "2px solid transparent",
+	color: theme.palette.cms.menu,
+	"&:hover": {
+		color: theme.palette.cms.menuHover,
+		borderBottom: "2px solid white",
+	},
 }))
 
-const Right = styled("div")(({ theme }) => ({
+const RightConrols = styled(Box)(({ theme }) => ({
 	display: "flex",
-	flex: 1,
+	height: "100%",
 	alignItems: "center",
-	justifyContent: "flex-end",
-	gap: 10,
-	position: "relative",
-	[theme.breakpoints.down("lg")]: {
-		flex: 4,
-	},
 }))
 
 const Navbar = () => {
-	return (
-		<Container>
-			<Left>
-				<Church color="secondary" />
-				<TitleLg> Church Management System </TitleLg>
-				<TitleSm> CMS </TitleSm>
-			</Left>
-			<Center>
-				<SearchBar placeholder="Search..." />
-				<IconButton>
-					<Search />
-				</IconButton>
-			</Center>
-			<Right>
-				<Badge badgeContent={4} color="secondary">
-					<Notifications />
-				</Badge>
+	const [anchorEl, setAnchorEl] = useState(null)
+	const open = Boolean(anchorEl)
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
-				<STUserMenu />
-			</Right>
-		</Container>
+	const handleClick = (e) => {
+		setAnchorEl(e.currentTarget)
+	}
+
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
+
+	const handleLogout = () => {
+		logoutUser(dispatch)
+		navigate("/")
+	}
+
+	return (
+		<>
+			<AppBar position="static">
+				<Toolbar sx={{ height: 80 }}>
+					<WebTitle component="div" variant="h4">
+						Church Management System
+					</WebTitle>
+					<MobileTitle component="div" variant="h4">
+						CMS
+					</MobileTitle>
+					<RightConrols>
+						<NavbarMenu>
+							<NavbarMenuItem>About Us</NavbarMenuItem>
+							<NavbarMenuItem>Features</NavbarMenuItem>
+							<NavbarMenuItem>Support</NavbarMenuItem>
+							<NavbarMenuItem>Billing</NavbarMenuItem>
+						</NavbarMenu>
+						<IconButton
+							size="large"
+							color="inherit"
+							onClick={handleClick}
+						>
+							<Avatar src={userimg} />
+						</IconButton>
+					</RightConrols>
+				</Toolbar>
+			</AppBar>
+			<Menu
+				anchorEl={anchorEl}
+				id="account-menu"
+				open={open}
+				onClose={handleClose}
+				onClick={handleClose}
+				PaperProps={{
+					elevation: 0,
+					sx: {
+						overflow: "visible",
+						filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+						mt: 1.5,
+						"& .MuiAvatar-root": {
+							width: 32,
+							height: 32,
+							ml: -0.5,
+							mr: 1,
+						},
+						"&:before": {
+							content: '""',
+							display: "block",
+							position: "absolute",
+							top: 0,
+							right: 14,
+							width: 10,
+							height: 10,
+							bgcolor: "background.paper",
+							transform: "translateY(-50%) rotate(45deg)",
+							zIndex: 0,
+						},
+					},
+				}}
+				transformOrigin={{ horizontal: "right", vertical: "top" }}
+				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+			>
+				<MenuItem>
+					<ListItemIcon>
+						<Edit fontSize="small" />
+					</ListItemIcon>
+					Edit Profile
+				</MenuItem>
+				<MenuItem>
+					<ListItemIcon>
+						<Settings fontSize="small" />
+					</ListItemIcon>
+					Settings
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleLogout}>
+					<ListItemIcon>
+						<Logout fontSize="small" />
+					</ListItemIcon>
+					Logout
+				</MenuItem>
+			</Menu>
+		</>
 	)
 }
 

@@ -7,14 +7,11 @@ import {
 	Person,
 	Search,
 } from "@mui/icons-material"
-import { MenuItem, styled, Typography } from "@mui/material"
-import { purple, red } from "@mui/material/colors"
-import { padding } from "@mui/system"
+import { styled, Typography } from "@mui/material"
 import Navbar from "../components/common/nav/Navbar"
 import STMenuItem from "../components/common/STMenuItem"
 import { alpha } from "@mui/material"
 import { Outlet } from "react-router-dom"
-import { calculateNewValue } from "@testing-library/user-event/dist/utils"
 
 const Container = styled("div")(({ theme }) => ({
 	height: "100vh",
@@ -36,13 +33,10 @@ const Wrapper = styled("div")(({ theme }) => ({
 const LeftBar = styled("div")(({ theme }) => ({
 	height: "100%",
 	flex: 1,
-	// [theme.breakpoints.down("lg")]: {
-	// 	flex: 1,
-	// },
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "flex-start",
-	backgroundColor: alpha(theme.palette.primary.main, 0.2),
+	// backgroundColor: alpha(theme.palette.primary.main, 0.2),
 	paddingLeft: 20,
 	paddingTop: 20,
 }))
