@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom"
 //application imports
 import Upload from "../common/Upload"
 import ChurchForm from "./ChurchForm"
-import { createChurch } from "../../redux/actions/churchActions"
+import { saveChurch } from "../../redux/actions/churchActions"
 // import useUpload from "../../hooks/useUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
@@ -62,7 +62,7 @@ const ChurchAddEdit = () => {
 						...church,
 					})
 					setImage(church.churchimg)
-					console.log(formData)
+
 					setMode("edit")
 				}
 			}
@@ -70,12 +70,14 @@ const ChurchAddEdit = () => {
 		getChurch()
 	}, [])
 
+	console.log(formData)
+
 	const handleSave = async () => {
 		// const { progress, url, error } = fileUpoad(image)
 		try {
 			console.log(formData)
-			await createChurch(formData, mode, dispatch)
-			if (!error) navigate("/home")
+			await saveChurch(formData, mode, dispatch)
+			navigate("/home")
 		} catch (err) {
 			console.log(err)
 		}

@@ -69,5 +69,8 @@ export const {
 	saveChurchStart,
 	saveChurchSuccess,
 	saveChurchFailure,
+	updateChurchStart,
+	updateChurchSuccess,
+	updateChurchFailure,
 } = churchSlice.actions
 export default churchSlice.reducer

@@ -35,7 +35,7 @@ const Mainpage = () => {
 	const userinfo = useSelector((state) => state.auth.userinfo)
 
 	useEffect(() => {
-		// console.log(userinfo)
+		console.log("fetching churches from db")
 		getChurches(userinfo.accountid, true, dispatch)
 	}, [])
 

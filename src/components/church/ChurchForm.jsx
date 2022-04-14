@@ -32,7 +32,7 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					label="Description/History of the Church"
 					type="text"
 					variant="filled"
-					value={formdata.churchdesc || ""}
+					value={formdata.description || ""}
 					onChange={(e) =>
 						setformdata({
 							...formdata,
@@ -206,7 +206,7 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					label="Start date"
 					type="date"
 					variant="filled"
-					value={formdata.startdate}
+					value={new Date(formdata.startdate).toDateString()}
 					onChange={(e) =>
 						setformdata({
 							...formdata,

@@ -5,6 +5,9 @@ import {
 	saveChurchStart,
 	saveChurchSuccess,
 	saveChurchFailure,
+	updateChurchStart,
+	updateChurchSuccess,
+	updateChurchFailure,
 } from "../slices/churchSlice"
 import { apiRequest as api } from "../../utils/util"
 import { dummychurch } from "../../dataobjects/dummies"
@@ -27,14 +30,25 @@ export const getChurches = async (accountid, dummy = false, dispatch) => {
 	}
 }
 
+//overarching function for add/update
+export const saveChurch = async (formdata, mode, dispatch) => {
+	try {
+		if (mode === "add") {
+			await createChurch(formdata, dispatch)
+		} else {
+			await updateChurch(formdata, dispatch)
+		}
+	} catch (err) {}
+}
+
 //create new church
-export const createChurch = (formdata, dispatch) => {
+export const createChurch = async (formdata, dispatch) => {
 	if (!formdata) throw new Error("missing form data")
 	dispatch(saveChurchStart())
 	console.log(formdata)
 	try {
 		// const api = secureApiRequest(token)
-		const res = api.post("/churches/save", formdata)
+		const res = await api.post("/churches/save", formdata)
 		dispatch(saveChurchSuccess(res.data))
 	} catch (err) {
 		dispatch(saveChurchFailure())
@@ -42,15 +56,19 @@ export const createChurch = (formdata, dispatch) => {
 }
 
 //create new church
-export const updateChurch = (formdata, id, dispatch) => {
+export const updateChurch = async (formdata, dispatch) => {
 	if (!formdata) throw new Error("missing form data")
-	dispatch(saveChurchStart())
+
+	dispatch(updateChurchStart())
 	console.log(formdata)
 	try {
 		// const api = secureApiRequest(token)
-		const res = api.post("/churches/save", formdata)
-		dispatch(saveChurchSuccess(res.data))
+		const res = await api.patch(
+			`/churches/update/${formdata._id}`,
+			formdata
+		)
+		dispatch(updateChurchSuccess(res.data))
 	} catch (err) {
-		dispatch(saveChurchFailure())
+		dispatch(updateChurchFailure())
 	}
 }
