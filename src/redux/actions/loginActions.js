@@ -7,13 +7,11 @@ import {
 	logoutFailure,
 } from "../slices/loginSlice"
 import { apiRequest as api } from "../../utils/util"
-// import useAuth from "../../hooks/useAuth"
 
 // User CRUD requests
 // get all users from db for an account
 export const loginUser = async (username, password, dispatch) => {
 	dispatch(loginStart())
-	// const { setAuth } = useAuth()
 	try {
 		const res = await api.post("/auth/login", {
 			username: username,

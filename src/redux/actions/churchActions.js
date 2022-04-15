@@ -9,23 +9,21 @@ import {
 	updateChurchSuccess,
 	updateChurchFailure,
 } from "../slices/churchSlice"
-import { apiRequest as api } from "../../utils/util"
+import { goodToGo, unAuthorized } from "../slices/authSlice"
+// import { apiRequest as api } from "../../utils/util"
 import { dummychurch } from "../../dataobjects/dummies"
 
 // get all churches from db for an account
-export const getChurches = async (accountid, dummy = false, dispatch) => {
+export const getChurches = async (accountid, api, dispatch) => {
 	let updatedchurches
 	// const api = secureApiRequest(token)
 	dispatch(getChurchesStart())
 	try {
 		const res = await api.get("/churches/")
-		if (dummy) {
-			updatedchurches = [dummychurch, ...res.data]
-			console.log(updatedchurches)
-		}
+		updatedchurches = [dummychurch, ...res.data]
+		console.log(updatedchurches)
 		dispatch(getChurchesSuccess(updatedchurches))
 	} catch (err) {
-		console.log(err)
 		dispatch(getChurchesFailure())
 	}
 }
@@ -42,7 +40,7 @@ export const saveChurch = async (formdata, mode, dispatch) => {
 }
 
 //create new church
-export const createChurch = async (formdata, dispatch) => {
+export const createChurch = async (formdata, api, dispatch) => {
 	if (!formdata) throw new Error("missing form data")
 	dispatch(saveChurchStart())
 	console.log(formdata)
@@ -56,7 +54,7 @@ export const createChurch = async (formdata, dispatch) => {
 }
 
 //create new church
-export const updateChurch = async (formdata, dispatch) => {
+export const updateChurch = async (formdata, api, dispatch) => {
 	if (!formdata) throw new Error("missing form data")
 
 	dispatch(updateChurchStart())

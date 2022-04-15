@@ -3,16 +3,12 @@ import {
 	Button,
 	Card,
 	CardActions,
-	CardContent,
 	CardHeader,
 	CardMedia,
 	Grid,
-	Typography,
 } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { red } from "@mui/material/colors"
-import ChurchAddEdit from "../church/ChurchAddEdit"
-import theme from "../../theme/theme"
 
 const ChurchCard = ({ church }) => {
 	const navigate = useNavigate()

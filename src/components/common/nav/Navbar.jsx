@@ -1,12 +1,10 @@
-import { Edit, Logout, PersonAdd, Settings } from "@mui/icons-material"
+import { Edit, Logout, Settings } from "@mui/icons-material"
 import {
 	AppBar,
 	Avatar,
 	Box,
-	Button,
 	Divider,
 	IconButton,
-	Link,
 	ListItemIcon,
 	Menu,
 	MenuItem,
@@ -15,9 +13,9 @@ import {
 	Typography,
 } from "@mui/material"
 import { useState } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import userimg from "../../../images/anu_profile.jpg"
-import { logoutUser } from "../../../redux/actions/authActions"
+import { logoutUser } from "../../../redux/actions/loginActions"
 import { useDispatch } from "react-redux"
 
 const WebTitle = styled(Typography)(({ theme }) => ({

@@ -3,14 +3,17 @@ import { Box } from "@mui/system"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 // import useLogin from "../../hooks/useLogin"
-import { loginUser } from "../../redux/actions/authActions"
-import { useDispatch } from "react-redux"
+import { loginUser } from "../../redux/actions/loginActions"
+import { useDispatch, useSelector } from "react-redux"
+// import useApi from "../../hooks/useApi"
 
 const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState(false)
+	const status = useSelector((state) => state.auth.status)
 	const dispatch = useDispatch()
+	// const api = useApi()
 
 	let navigate = useNavigate()
 

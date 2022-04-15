@@ -1,10 +1,8 @@
-import { Grid, TextField, Typography, MenuItem, Button } from "@mui/material"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Grid, TextField, MenuItem } from "@mui/material"
 import { countries } from "../../dataobjects/countries"
+import moment from "moment"
 
 const ChurchForm = ({ formdata, setformdata }) => {
-	const navigate = useNavigate()
 	return (
 		<Grid container rowSpacing={2} columnSpacing={4} mt={2}>
 			<Grid item xs={12}>
@@ -206,7 +204,7 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					label="Start date"
 					type="date"
 					variant="filled"
-					value={new Date(formdata.startdate).toDateString()}
+					value={moment(formdata.startdate).format("YYYY-MM-DD")}
 					onChange={(e) =>
 						setformdata({
 							...formdata,
@@ -225,7 +223,7 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					label="End date"
 					type="date"
 					variant="filled"
-					value={formdata.enddate}
+					value={moment(formdata.enddate).format("YYYY-MM-DD")}
 					onChange={(e) =>
 						setformdata({
 							...formdata,

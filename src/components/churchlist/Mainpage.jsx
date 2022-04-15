@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getChurches } from "../../redux/actions/churchActions"
 import ChurchCard from "./ChurchCard"
+import useApi from "../../hooks/useApi"
 
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
@@ -27,16 +28,17 @@ const SubInfo = styled("div")(({ theme }) => ({
 
 const Mainpage = () => {
 	const dispatch = useDispatch()
+	const api = useApi()
 
 	//get churches from the store
-	const { churches, processing, error } = useSelector((state) => state.church)
+	const { churches } = useSelector((state) => state.church)
 
 	//get currentuser from the store
-	const userinfo = useSelector((state) => state.auth.userinfo)
+	const userinfo = useSelector((state) => state.login.userinfo)
 
 	useEffect(() => {
 		console.log("fetching churches from db")
-		getChurches(userinfo.accountid, true, dispatch)
+		getChurches(userinfo.accountid, api, dispatch)
 	}, [])
 
 	// console.log(churches)

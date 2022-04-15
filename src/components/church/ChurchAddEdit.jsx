@@ -1,5 +1,5 @@
 //mui imports
-import { Box, Button, Grid, Typography } from "@mui/material"
+import { Button, Grid, Typography } from "@mui/material"
 import { styled } from "@mui/system"
 
 //react imports
@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import Upload from "../common/Upload"
 import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
+import useApi from "../../hooks/useApi"
 // import useUpload from "../../hooks/useUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
@@ -38,6 +39,7 @@ const ButtonContainer = styled("div")(({ theme }) => ({
 
 const ChurchAddEdit = () => {
 	const navigate = useNavigate()
+	// const api = useApi()
 	const userinfo = useSelector((state) => state.auth.userinfo)
 	const { churches, error } = useSelector((state) => state.church)
 	const dispatch = useDispatch()
@@ -84,51 +86,46 @@ const ChurchAddEdit = () => {
 	}
 
 	return (
-		<Grid container>
-			<STContainer>
-				<Grid container sx={{ display: "flex" }}>
-					<Grid item xs={12} lg={8}>
-						<Typography variant="h3" color="GrayText">
-							{mode === "add"
-								? "Add a new church"
-								: "Edit Church"}
-						</Typography>
-						<Typography variant="body2" color="GrayText" pb={5}>
-							{mode === "add"
-								? "Add new church details. Once you add the church you will see as a list of churches when you login next	time."
-								: "Edit church details"}
-						</Typography>
-						<ChurchForm
-							formdata={formData}
-							setformdata={setFormData}
-						/>
-						<ButtonContainer>
-							<Button variant="contained" onClick={handleSave}>
-								Save
-							</Button>
-							<Button
-								variant="contained"
-								sx={{ ml: 2 }}
-								onClick={() => navigate("/home")}
-							>
-								Cancel
-							</Button>
-						</ButtonContainer>
-					</Grid>
-					<Grid
-						item
-						xs={12}
-						lg={4}
-						display="flex"
-						padding={2}
-						alignItems="center"
-						justifyContent="center"
-					>
-						<Upload />
-					</Grid>
+		// <Grid container>
+		<STContainer>
+			<Grid container sx={{ display: "flex" }}>
+				<Grid item xs={12} lg={8}>
+					<Typography variant="h3" color="GrayText">
+						{mode === "add" ? "Add a new church" : "Edit Church"}
+					</Typography>
+					<Typography variant="body2" color="GrayText" pb={5}>
+						{mode === "add"
+							? "Add new church details. Once you add the church you will see as a list of churches when you login next	time."
+							: "Edit church details"}
+					</Typography>
+					<ChurchForm formdata={formData} setformdata={setFormData} />
+					<ButtonContainer>
+						<Button variant="contained" onClick={handleSave}>
+							Save
+						</Button>
+						<Button
+							variant="contained"
+							sx={{ ml: 2 }}
+							onClick={() => navigate("/home")}
+						>
+							Cancel
+						</Button>
+					</ButtonContainer>
 				</Grid>
-			</STContainer>
-		</Grid>
+				<Grid
+					item
+					xs={12}
+					lg={4}
+					display="flex"
+					padding={2}
+					alignItems="center"
+					justifyContent="center"
+				>
+					<Upload />
+				</Grid>
+			</Grid>
+		</STContainer>
+		// </Grid>
 	)
 }
 
