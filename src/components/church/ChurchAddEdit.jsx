@@ -40,7 +40,7 @@ const ButtonContainer = styled("div")(({ theme }) => ({
 const ChurchAddEdit = () => {
 	const navigate = useNavigate()
 	// const api = useApi()
-	const userinfo = useSelector((state) => state.auth.userinfo)
+	const userinfo = useSelector((state) => state.login.userinfo)
 	const { churches, error } = useSelector((state) => state.church)
 	const dispatch = useDispatch()
 	const [image, setImage] = useState(null)
@@ -72,7 +72,7 @@ const ChurchAddEdit = () => {
 		getChurch()
 	}, [])
 
-	console.log(formData)
+	// console.log(formData)
 
 	const handleSave = async () => {
 		// const { progress, url, error } = fileUpoad(image)

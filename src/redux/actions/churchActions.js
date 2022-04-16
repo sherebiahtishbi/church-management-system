@@ -21,7 +21,7 @@ export const getChurches = async (accountid, api, dispatch) => {
 	try {
 		const res = await api.get("/churches/")
 		updatedchurches = [dummychurch, ...res.data]
-		console.log(updatedchurches)
+		// console.log(updatedchurches)
 		dispatch(getChurchesSuccess(updatedchurches))
 	} catch (err) {
 		dispatch(getChurchesFailure())
