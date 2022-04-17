@@ -1,5 +1,14 @@
 //mui imports
-import { Button, Grid, Typography } from "@mui/material"
+import {
+	Box,
+	Button,
+	Divider,
+	Grid,
+	ListItemIcon,
+	ListItemText,
+	MenuItem,
+	Typography,
+} from "@mui/material"
 import { styled } from "@mui/system"
 
 //react imports
@@ -12,6 +21,16 @@ import Upload from "../common/Upload"
 import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
+import CustomFileUpload from "../common/CustomFileUpload"
+import {
+	Apartment,
+	ContentCut,
+	Event,
+	FeaturedPlayListOutlined,
+	Paid,
+	People,
+	Person,
+} from "@mui/icons-material"
 // import useUpload from "../../hooks/useUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
@@ -35,6 +54,12 @@ const ButtonContainer = styled("div")(({ theme }) => ({
 	[theme.breakpoints.down("md")]: {
 		justifyContent: "center",
 	},
+}))
+
+const MenuContainer = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	gap: 6,
 }))
 
 const ChurchAddEdit = () => {
@@ -89,8 +114,58 @@ const ChurchAddEdit = () => {
 		// <Grid container>
 		<STContainer>
 			<Grid container sx={{ display: "flex" }}>
-				<Grid item xs={12} lg={2}>
-					<Upload />
+				<Grid
+					item
+					xs={12}
+					lg={2}
+					sx={{ marginRight: { xs: 0, lg: 4 } }}
+				>
+					<CustomFileUpload />
+					<Divider />
+					<MenuContainer>
+						<MenuItem>
+							<ListItemIcon>
+								<FeaturedPlayListOutlined />
+							</ListItemIcon>
+							<ListItemText>Basic Information</ListItemText>
+						</MenuItem>
+						<MenuItem>
+							<ListItemIcon>
+								<Person />
+							</ListItemIcon>
+							<ListItemText>Pastor</ListItemText>
+						</MenuItem>
+						<MenuItem>
+							<ListItemIcon>
+								<People />
+							</ListItemIcon>
+							<ListItemText>Members</ListItemText>
+						</MenuItem>
+						<MenuItem>
+							<ListItemIcon>
+								<Event />
+							</ListItemIcon>
+							<ListItemText>Events</ListItemText>
+						</MenuItem>
+						<MenuItem>
+							<ListItemIcon>
+								<People />
+							</ListItemIcon>
+							<ListItemText>Groups</ListItemText>
+						</MenuItem>
+						<MenuItem>
+							<ListItemIcon>
+								<Apartment />
+							</ListItemIcon>
+							<ListItemText>Facilities</ListItemText>
+						</MenuItem>
+						<MenuItem>
+							<ListItemIcon>
+								<Paid />
+							</ListItemIcon>
+							<ListItemText>Donation</ListItemText>
+						</MenuItem>
+					</MenuContainer>
 				</Grid>
 				<Grid item xs={12} lg={8}>
 					<Typography variant="h3" color="GrayText">
