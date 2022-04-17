@@ -89,6 +89,9 @@ const ChurchAddEdit = () => {
 		// <Grid container>
 		<STContainer>
 			<Grid container sx={{ display: "flex" }}>
+				<Grid item xs={12} lg={2}>
+					<Upload />
+				</Grid>
 				<Grid item xs={12} lg={8}>
 					<Typography variant="h3" color="GrayText">
 						{mode === "add" ? "Add a new church" : "Edit Church"}
@@ -115,14 +118,12 @@ const ChurchAddEdit = () => {
 				<Grid
 					item
 					xs={12}
-					lg={4}
+					lg={2}
 					display="flex"
 					padding={2}
 					alignItems="center"
 					justifyContent="center"
-				>
-					<Upload />
-				</Grid>
+				></Grid>
 			</Grid>
 		</STContainer>
 		// </Grid>
