@@ -12,7 +12,7 @@ import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
 import CustomFileUpload from "../common/CustomFileUpload"
-import useUpload from "../../hooks/useUpload"
+import UploadProgressbar from "../common/UploadProgressbar"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -40,21 +40,17 @@ const ButtonContainer = styled("div")(({ theme }) => ({
 const ChurchAdd = () => {
 	const navigate = useNavigate()
 	const api = useApi()
+	const dispatch = useDispatch()
 	const userinfo = useSelector((state) => state.login.userinfo)
 	const { error } = useSelector((state) => state.church)
-	// const [image, setImage] = useState(null)
 	const [formData, setFormData] = useState({
 		accountid: userinfo.accountid,
 		userid: userinfo.userid,
 	})
-	const { progress, url, uploaderror } = useUpload(formData.imagefile)
 
 	const handleSave = async () => {
 		try {
-			console.log(formData.imagefile)
-			// setImage(formData.imagefile)
 			console.log(formData)
-			console.log(url)
 			await saveChurch(formData, api, dispatch)
 			navigate("/home")
 		} catch (err) {
@@ -100,6 +96,7 @@ const ChurchAdd = () => {
 						formdata={formData}
 						setformdata={setFormData}
 					/>
+					<UploadProgressbar file={formData.imagefile} />
 				</Grid>
 				<Grid item xs={12} lg={8}>
 					<ChurchForm formdata={formData} setformdata={setFormData} />
