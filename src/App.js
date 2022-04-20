@@ -4,7 +4,7 @@ import Login from "./pages/login/Login"
 import theme from "./theme/theme"
 import Register from "./components/accounts/Register"
 import ProtectedRoute from "./components/common/ProtectedRoute"
-import ChurchAddEdit from "./components/church/ChurchAddEdit"
+import { ChurchAdd, ChurchEdit } from "./components/church"
 import Unauthorized from "./components/common/Unauthorized"
 import Logout from "./pages/Logout"
 import Pagenotfound from "./pages/Pagenotfound"
@@ -47,7 +47,7 @@ function App() {
 							path="add"
 							element={
 								<ProtectedRoute>
-									<ChurchAddEdit />
+									<ChurchAdd />
 								</ProtectedRoute>
 							}
 						/>
@@ -55,7 +55,7 @@ function App() {
 							path="edit/:id"
 							element={
 								<ProtectedRoute>
-									<ChurchAddEdit />
+									<ChurchEdit />
 								</ProtectedRoute>
 							}
 						/>

@@ -9,8 +9,6 @@ import {
 	updateChurchSuccess,
 	updateChurchFailure,
 } from "../slices/churchSlice"
-import { goodToGo, unAuthorized } from "../slices/authSlice"
-// import { apiRequest as api } from "../../utils/util"
 import { dummychurch } from "../../dataobjects/dummies"
 
 // get all churches from db for an account
@@ -29,12 +27,12 @@ export const getChurches = async (accountid, api, dispatch) => {
 }
 
 //overarching function for add/update
-export const saveChurch = async (formdata, mode, dispatch) => {
+export const saveChurch = async (formdata, api, dispatch) => {
 	try {
-		if (mode === "add") {
-			await createChurch(formdata, dispatch)
-		} else {
+		if (formdata._id) {
 			await updateChurch(formdata, dispatch)
+		} else {
+			await createChurch(formdata, api, dispatch)
 		}
 	} catch (err) {}
 }

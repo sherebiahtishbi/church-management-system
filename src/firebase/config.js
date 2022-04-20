@@ -13,4 +13,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebasApp = initializeApp(firebaseConfig)
 
+// export const mediaStorage = getStorage(firebasApp)
 export const mediaStorage = getStorage(firebasApp)

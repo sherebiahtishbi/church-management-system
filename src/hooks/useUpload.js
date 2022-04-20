@@ -1,32 +1,38 @@
 import { useState, useEffect } from "react"
 import { mediaStorage } from "../firebase/config"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 
 const useUpload = (file) => {
 	const [progress, setProgress] = useState(0)
-	const [error, setError] = useState(null)
+	const [uploaderror, setUploadError] = useState(null)
 	const [url, setUrl] = useState(null)
 
 	useEffect(() => {
-		// references
-		const storageRef = mediaStorage.ref(file.name)
+		if (!file) return
+		const storageRef = ref(mediaStorage, "images/" + file.name)
+		const uploadTask = uploadBytesResumable(storageRef, file)
 
-		storageRef.put(file).on(
+		uploadTask.on(
 			"state_changed",
 			(snap) => {
-				let percentage = (snap.bytesTransferred / snap.totalBytes) * 100
+				const percentage =
+					(snap.bytesTransferred / snap.totalBytes) * 100
+				console.log(percentage)
 				setProgress(percentage)
 			},
-			(err) => {
-				setError(err)
+			(error) => {
+				setUploadError(error)
+				console.log(error)
 			},
-			async () => {
-				const url = await storageRef.getDownloadURL()
-				setUrl(url)
+			() => {
+				getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+					setUrl(downloadUrl)
+					console.log(downloadUrl)
+				})
 			}
 		)
 	}, [file])
-
-	return { progress, url, error }
+	return { progress, url, uploaderror }
 }
 
 export default useUpload

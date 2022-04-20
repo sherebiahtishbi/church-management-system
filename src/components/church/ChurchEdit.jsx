@@ -17,20 +17,11 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
 //application imports
-import Upload from "../common/Upload"
 import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
 import CustomFileUpload from "../common/CustomFileUpload"
-import {
-	Apartment,
-	ContentCut,
-	Event,
-	FeaturedPlayListOutlined,
-	Paid,
-	People,
-	Person,
-} from "@mui/icons-material"
+import { menuOptions } from "../../dataobjects/churchmenu"
 // import useUpload from "../../hooks/useUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
@@ -39,10 +30,10 @@ const STContainer = styled("div")(({ theme }) => ({
 	width: "100%",
 	padding: 30,
 	[theme.breakpoints.down("lg")]: {
-		padding: 0,
+		padding: 10,
 	},
 	[theme.breakpoints.down("sm")]: {
-		padding: 0,
+		padding: 20,
 	},
 }))
 
@@ -62,7 +53,22 @@ const MenuContainer = styled(Box)(({ theme }) => ({
 	gap: 6,
 }))
 
-const ChurchAddEdit = () => {
+const ChurchMenu = () => {
+	return (
+		<Box>
+			<MenuContainer>
+				{menuOptions.map((menuitem) => (
+					<MenuItem key={menuitem.id}>
+						<ListItemIcon>{menuitem.icon}</ListItemIcon>
+						<ListItemText>{menuitem.text}</ListItemText>
+					</MenuItem>
+				))}
+			</MenuContainer>
+		</Box>
+	)
+}
+
+const ChurchEdit = () => {
 	const navigate = useNavigate()
 	// const api = useApi()
 	const userinfo = useSelector((state) => state.login.userinfo)
@@ -114,6 +120,36 @@ const ChurchAddEdit = () => {
 		// <Grid container>
 		<STContainer>
 			<Grid container sx={{ display: "flex" }}>
+				<Grid item xs={12} sx={{ display: { xs: "flex", lg: "none" } }}>
+					<ChurchMenu />
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					// sx={{
+					// 	display: { xs: "flex", sm: "none" },
+					// 	flexDirection: "column",
+					// }}
+				>
+					<Typography
+						variant="h3"
+						color="GrayText"
+						textAlign="center"
+						// sx={{ textAlign: "center" }}
+					>
+						{mode === "add" ? "Add a new church" : "Edit Church"}
+					</Typography>
+					<Typography
+						variant="body2"
+						color="GrayText"
+						pb={5}
+						textAlign="center"
+					>
+						{mode === "add"
+							? "Add new church details. Once you add the church you will see as a list of churches when you login next	time."
+							: "Edit church details"}
+					</Typography>
+				</Grid>
 				<Grid
 					item
 					xs={12}
@@ -122,60 +158,11 @@ const ChurchAddEdit = () => {
 				>
 					<CustomFileUpload />
 					<Divider />
-					<MenuContainer>
-						<MenuItem>
-							<ListItemIcon>
-								<FeaturedPlayListOutlined />
-							</ListItemIcon>
-							<ListItemText>Basic Information</ListItemText>
-						</MenuItem>
-						<MenuItem>
-							<ListItemIcon>
-								<Person />
-							</ListItemIcon>
-							<ListItemText>Pastor</ListItemText>
-						</MenuItem>
-						<MenuItem>
-							<ListItemIcon>
-								<People />
-							</ListItemIcon>
-							<ListItemText>Members</ListItemText>
-						</MenuItem>
-						<MenuItem>
-							<ListItemIcon>
-								<Event />
-							</ListItemIcon>
-							<ListItemText>Events</ListItemText>
-						</MenuItem>
-						<MenuItem>
-							<ListItemIcon>
-								<People />
-							</ListItemIcon>
-							<ListItemText>Groups</ListItemText>
-						</MenuItem>
-						<MenuItem>
-							<ListItemIcon>
-								<Apartment />
-							</ListItemIcon>
-							<ListItemText>Facilities</ListItemText>
-						</MenuItem>
-						<MenuItem>
-							<ListItemIcon>
-								<Paid />
-							</ListItemIcon>
-							<ListItemText>Donation</ListItemText>
-						</MenuItem>
-					</MenuContainer>
+					<Box sx={{ display: { xs: "none", lg: "flex" } }}>
+						<ChurchMenu />
+					</Box>
 				</Grid>
 				<Grid item xs={12} lg={8}>
-					<Typography variant="h3" color="GrayText">
-						{mode === "add" ? "Add a new church" : "Edit Church"}
-					</Typography>
-					<Typography variant="body2" color="GrayText" pb={5}>
-						{mode === "add"
-							? "Add new church details. Once you add the church you will see as a list of churches when you login next	time."
-							: "Edit church details"}
-					</Typography>
 					<ChurchForm formdata={formData} setformdata={setFormData} />
 					<ButtonContainer>
 						<Button variant="contained" onClick={handleSave}>
@@ -205,4 +192,4 @@ const ChurchAddEdit = () => {
 	)
 }
 
-export default ChurchAddEdit
+export default ChurchEdit

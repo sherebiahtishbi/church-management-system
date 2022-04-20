@@ -1,0 +1,147 @@
+//mui imports
+import { Alert, Button, Grid, Snackbar, Typography } from "@mui/material"
+import { styled } from "@mui/system"
+
+//react imports
+import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+
+//application imports
+import ChurchForm from "./ChurchForm"
+import { saveChurch } from "../../redux/actions/churchActions"
+import useApi from "../../hooks/useApi"
+import CustomFileUpload from "../common/CustomFileUpload"
+import useUpload from "../../hooks/useUpload"
+
+const STContainer = styled("div")(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	width: "100%",
+	padding: 30,
+	[theme.breakpoints.down("lg")]: {
+		padding: 10,
+	},
+	[theme.breakpoints.down("sm")]: {
+		padding: 20,
+	},
+}))
+
+const ButtonContainer = styled("div")(({ theme }) => ({
+	display: "flex",
+	[theme.breakpoints.up("lg")]: {
+		justifyContent: "flex-end",
+	},
+	[theme.breakpoints.down("md")]: {
+		justifyContent: "center",
+	},
+}))
+
+const ChurchAdd = () => {
+	const navigate = useNavigate()
+	const api = useApi()
+	const userinfo = useSelector((state) => state.login.userinfo)
+	const { error } = useSelector((state) => state.church)
+	// const [image, setImage] = useState(null)
+	const [formData, setFormData] = useState({
+		accountid: userinfo.accountid,
+		userid: userinfo.userid,
+	})
+	const { progress, url, uploaderror } = useUpload(formData.imagefile)
+
+	const handleSave = async () => {
+		try {
+			console.log(formData.imagefile)
+			// setImage(formData.imagefile)
+			console.log(formData)
+			console.log(url)
+			await saveChurch(formData, api, dispatch)
+			navigate("/home")
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	const handleClose = () => {}
+
+	return (
+		// <Grid container>
+		<STContainer>
+			<Grid container sx={{ display: "flex" }}>
+				<Grid item xs={12}>
+					<Typography
+						variant="h3"
+						color="GrayText"
+						textAlign="center"
+						pb={2}
+					>
+						Add a new church
+					</Typography>
+					<Typography
+						variant="body2"
+						color="GrayText"
+						pb={3}
+						px={5}
+						textAlign="center"
+					>
+						Add new church details. Once you add the church you will
+						see it in the list of churches on the home page. Also
+						you will be able to add many other details for the
+						church.
+					</Typography>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					lg={2}
+					sx={{ marginRight: { xs: 0, lg: 4 } }}
+				>
+					<CustomFileUpload
+						formdata={formData}
+						setformdata={setFormData}
+					/>
+				</Grid>
+				<Grid item xs={12} lg={8}>
+					<ChurchForm formdata={formData} setformdata={setFormData} />
+					<ButtonContainer>
+						<Button variant="contained" onClick={handleSave}>
+							Save
+						</Button>
+						<Button
+							variant="contained"
+							sx={{ ml: 2 }}
+							onClick={() => navigate("/home")}
+						>
+							Cancel
+						</Button>
+					</ButtonContainer>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					lg={2}
+					display="flex"
+					padding={2}
+					alignItems="center"
+					justifyContent="center"
+				></Grid>
+			</Grid>
+			<Snackbar
+				open={!error}
+				autoHideDuration={3000}
+				onClose={handleClose}
+			>
+				<Alert
+					onClose={handleClose}
+					severity="success"
+					sx={{ width: "100%" }}
+				>
+					Church added successfully!
+				</Alert>
+			</Snackbar>
+		</STContainer>
+		// </Grid>
+	)
+}
+
+export default ChurchAdd
