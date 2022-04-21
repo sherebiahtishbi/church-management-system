@@ -12,7 +12,8 @@ import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
 import CustomFileUpload from "../common/CustomFileUpload"
-import UploadProgressbar from "../common/UploadProgressbar"
+// import UploadProgressbar from "../common/UploadProgressbar"
+import useFirebaseUpload from "../../hooks/useFirebaseUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -47,17 +48,23 @@ const ChurchAdd = () => {
 		accountid: userinfo.accountid,
 		userid: userinfo.userid,
 	})
+	const { uploadFile, progress, url, uploaderror } = useFirebaseUpload(
+		formData.imagefile
+	)
 
 	const handleSave = async () => {
 		try {
 			console.log(formData)
-			await saveChurch(formData, api, dispatch)
+			console.log("Now will upload file")
+			const imageurl = await uploadFile()
+			console.log(imageurl)
+			// await saveChurch(formData, api, dispatch)
 			navigate("/home")
 		} catch (err) {
 			console.log(err)
 		}
 	}
-
+	console.log(progress)
 	const handleClose = () => {}
 
 	return (
@@ -96,7 +103,7 @@ const ChurchAdd = () => {
 						formdata={formData}
 						setformdata={setFormData}
 					/>
-					<UploadProgressbar file={formData.imagefile} />
+					{/* <UploadProgressbar file={formData.imagefile} /> */}
 				</Grid>
 				<Grid item xs={12} lg={8}>
 					<ChurchForm formdata={formData} setformdata={setFormData} />
