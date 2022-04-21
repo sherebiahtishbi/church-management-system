@@ -26,7 +26,7 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					fullWidth
 					multiline
 					rows={4}
-					id="churchdesc"
+					id="description"
 					label="Description/History of the Church"
 					type="text"
 					variant="filled"
@@ -34,7 +34,7 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					onChange={(e) =>
 						setformdata({
 							...formdata,
-							churchdesc: e.target.value,
+							description: e.target.value,
 						})
 					}
 				></TextField>

@@ -19,12 +19,12 @@ const useFirebaseUpload = (file) => {
 						const percentage = Math.round(
 							(snap.bytesTransferred / snap.totalBytes) * 100
 						)
-						console.log(percentage)
+						// console.log(percentage)
 						setProgress(percentage)
 					},
 					(error) => {
 						setUploadError(error)
-						console.log(error)
+						// console.log(error)
 						reject(error)
 					},
 					async () => {
@@ -32,7 +32,7 @@ const useFirebaseUpload = (file) => {
 							uploadTask.snapshot.ref
 						)
 						setUrl(downloadUrl)
-						console.log(downloadUrl)
+						// console.log(downloadUrl)
 						resolve(downloadUrl)
 					}
 				)

@@ -22,7 +22,7 @@ import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
 import CustomFileUpload from "../common/CustomFileUpload"
 import { menuOptions } from "../../dataobjects/churchmenu"
-// import useUpload from "../../hooks/useUpload"
+import useFirebaseUpload from "../../hooks/useFirebaseUpload"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -70,13 +70,17 @@ const ChurchMenu = () => {
 
 const ChurchEdit = () => {
 	const navigate = useNavigate()
-	// const api = useApi()
+	const api = useApi()
 	const userinfo = useSelector((state) => state.login.userinfo)
 	const { churches, error } = useSelector((state) => state.church)
 	const dispatch = useDispatch()
-	const [image, setImage] = useState(null)
 	const [formData, setFormData] = useState({})
 	const [mode, setMode] = useState("add")
+
+	const { uploadFile, progress, url, uploaderror } = useFirebaseUpload(
+		formData.imagefile
+	)
+
 	const params = useParams()
 	//if component is called with id as a parameter then
 	//get the church with id and populate formdata
@@ -89,12 +93,7 @@ const ChurchEdit = () => {
 					church = churches.find((church) => church._id === params.id)
 				}
 				if (church) {
-					setFormData({
-						userid: userinfo.userid,
-						accountid: userinfo.accountid,
-						...church,
-					})
-					setImage(church.churchimg)
+					setFormData({ ...church })
 
 					setMode("edit")
 				}
@@ -106,10 +105,13 @@ const ChurchEdit = () => {
 	// console.log(formData)
 
 	const handleSave = async () => {
-		// const { progress, url, error } = fileUpoad(image)
 		try {
 			console.log(formData)
-			await saveChurch(formData, mode, dispatch)
+			console.log("Now will upload file")
+			const imageurl = await uploadFile()
+			console.log(imageurl)
+			formData.churchimg = imageurl
+			await saveChurch(formData, api, dispatch)
 			navigate("/home")
 		} catch (err) {
 			console.log(err)
@@ -123,21 +125,13 @@ const ChurchEdit = () => {
 				<Grid item xs={12} sx={{ display: { xs: "flex", lg: "none" } }}>
 					<ChurchMenu />
 				</Grid>
-				<Grid
-					item
-					xs={12}
-					// sx={{
-					// 	display: { xs: "flex", sm: "none" },
-					// 	flexDirection: "column",
-					// }}
-				>
+				<Grid item xs={12}>
 					<Typography
 						variant="h3"
 						color="GrayText"
 						textAlign="center"
-						// sx={{ textAlign: "center" }}
 					>
-						{mode === "add" ? "Add a new church" : "Edit Church"}
+						Edit Church
 					</Typography>
 					<Typography
 						variant="body2"
@@ -145,9 +139,9 @@ const ChurchEdit = () => {
 						pb={5}
 						textAlign="center"
 					>
-						{mode === "add"
-							? "Add new church details. Once you add the church you will see as a list of churches when you login next	time."
-							: "Edit church details"}
+						Here you can edit the basic church details. Also you can
+						add or modify many other details like pastors, staff,
+						members, church events, facilitites and donations.
 					</Typography>
 				</Grid>
 				<Grid
@@ -156,7 +150,10 @@ const ChurchEdit = () => {
 					lg={2}
 					sx={{ marginRight: { xs: 0, lg: 4 } }}
 				>
-					<CustomFileUpload />
+					<CustomFileUpload
+						formdata={formData}
+						setformdata={setFormData}
+					/>
 					<Divider />
 					<Box sx={{ display: { xs: "none", lg: "flex" } }}>
 						<ChurchMenu />

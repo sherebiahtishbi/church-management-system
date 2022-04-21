@@ -46,8 +46,9 @@ const ChurchAdd = () => {
 	const { error } = useSelector((state) => state.church)
 	const [formData, setFormData] = useState({
 		accountid: userinfo.accountid,
-		userid: userinfo.userid,
+		createdby: userinfo.userid,
 	})
+
 	const { uploadFile, progress, url, uploaderror } = useFirebaseUpload(
 		formData.imagefile
 	)
@@ -55,10 +56,14 @@ const ChurchAdd = () => {
 	const handleSave = async () => {
 		try {
 			console.log(formData)
+			const { imagefile, ...formdata } = formData
+			console.log(formdata)
 			console.log("Now will upload file")
 			const imageurl = await uploadFile()
 			console.log(imageurl)
-			// await saveChurch(formData, api, dispatch)
+			formdata.churchimg = imageurl
+			console.log(formdata)
+			await saveChurch(formdata, api, dispatch)
 			navigate("/home")
 		} catch (err) {
 			console.log(err)

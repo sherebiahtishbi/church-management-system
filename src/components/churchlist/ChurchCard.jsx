@@ -9,6 +9,7 @@ import {
 } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { red } from "@mui/material/colors"
+import moment from "moment"
 
 const ChurchCard = ({ church }) => {
 	const navigate = useNavigate()
@@ -37,7 +38,11 @@ const ChurchCard = ({ church }) => {
 						</Avatar>
 					}
 					title={church.churchname}
-					subheader="September 14, 2016"
+					subheader={
+						church.startdate
+							? moment(church.startdate).format("MM/DD/YYYY")
+							: ""
+					}
 				/>
 				<CardMedia
 					component="img"

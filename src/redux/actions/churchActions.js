@@ -28,9 +28,10 @@ export const getChurches = async (accountid, api, dispatch) => {
 
 //overarching function for add/update
 export const saveChurch = async (formdata, api, dispatch) => {
+	console.log(formdata)
 	try {
 		if (formdata._id) {
-			await updateChurch(formdata, dispatch)
+			await updateChurch(formdata, api, dispatch)
 		} else {
 			await createChurch(formdata, api, dispatch)
 		}
