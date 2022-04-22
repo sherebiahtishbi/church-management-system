@@ -100,9 +100,9 @@ const ChurchEdit = () => {
 			}
 		}
 		getChurch()
-	}, [])
+	}, [params])
 
-	// console.log(formData)
+	console.log(formData)
 
 	const handleSave = async () => {
 		try {
@@ -131,7 +131,7 @@ const ChurchEdit = () => {
 						color="GrayText"
 						textAlign="center"
 					>
-						Edit Church
+						Edit Church Information
 					</Typography>
 					<Typography
 						variant="body2"

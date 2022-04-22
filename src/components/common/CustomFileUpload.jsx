@@ -1,7 +1,7 @@
 import { CloudUpload } from "@mui/icons-material"
 import { Box, styled } from "@mui/material"
 import { grey } from "@mui/material/colors"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, memo } from "react"
 import empty from "../../images/empty.png"
 
 const UploadContainer = styled(Box)(({ theme, file, empty }) => ({
@@ -65,12 +65,18 @@ const ImageContainer = styled(Box)(({ theme }) => ({
 	borderRadius: 5,
 }))
 
-const CustomFileUpload = ({ formdata = null, setformdata }) => {
-	console.log(formdata)
-	const [file, setFile] = useState(() => {
-		return formdata.churchimg ? formdata.churchimg : empty
-	})
+const CustomFileUpload = ({ formdata, setformdata }) => {
+	console.log("CustomFileUpload rendered")
+	const [file, setFile] = useState(null)
 	const hiddenFileInput = useRef(null)
+
+	useEffect(() => {
+		if (formdata.churchimg) {
+			setFile(formdata.churchimg)
+		} else {
+			setFile(empty)
+		}
+	}, [formdata])
 
 	const handleClick = () => {
 		hiddenFileInput.current.click()
@@ -92,7 +98,7 @@ const CustomFileUpload = ({ formdata = null, setformdata }) => {
 	return (
 		<Box display="flex" flexDirection="column" alignItems="center">
 			<ImageContainer>
-				<ImagePreview src={file ? file : empty} />
+				<ImagePreview src={file} />
 			</ImageContainer>
 			<UploadContainer onClick={handleClick}>
 				<DDlabel>Click to Add/Change an Image</DDlabel>
