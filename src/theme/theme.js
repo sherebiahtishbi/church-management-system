@@ -20,11 +20,10 @@ const theme = createTheme({
 		},
 		mode: "light",
 		cms: {
-			textLight: grey[600],
-			textDark: grey[900],
-			menu: grey[800],
-			menuHover: grey[900],
-			menuUnderline: grey[300],
+			text300: grey[300],
+			text600: grey[600],
+			text800: grey[800],
+			text900: grey[900],
 		},
 	},
 })

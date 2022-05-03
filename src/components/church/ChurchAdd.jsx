@@ -11,9 +11,10 @@ import { useNavigate } from "react-router-dom"
 import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
-import CustomFileUpload from "../common/CustomFileUpload"
+import { FileUpload } from "../common/CustomFileUpload"
 // import UploadProgressbar from "../common/UploadProgressbar"
 import useFirebaseUpload from "../../hooks/useFirebaseUpload"
+import Titles from "../common/Titles"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -44,6 +45,7 @@ const ChurchAdd = () => {
 	const dispatch = useDispatch()
 	const userinfo = useSelector((state) => state.login.userinfo)
 	const { error } = useSelector((state) => state.church)
+	const [currentImage, setCurrentImage] = useState(null)
 	const [formData, setFormData] = useState({
 		accountid: userinfo.accountid,
 		createdby: userinfo.userid,
@@ -73,30 +75,16 @@ const ChurchAdd = () => {
 	const handleClose = () => {}
 
 	return (
-		// <Grid container>
 		<STContainer>
 			<Grid container sx={{ display: "flex" }}>
 				<Grid item xs={12}>
-					<Typography
-						variant="h3"
-						color="GrayText"
-						textAlign="center"
-						pb={2}
-					>
-						Add a new church
-					</Typography>
-					<Typography
-						variant="body2"
-						color="GrayText"
-						pb={3}
-						px={5}
-						textAlign="center"
-					>
-						Add new church details. Once you add the church you will
+					<Titles
+						title="Add a new church"
+						subtitle="Add new church details. Once you add the church you will
 						see it in the list of churches on the home page. Also
 						you will be able to add many other details for the
-						church.
-					</Typography>
+						church."
+					/>
 				</Grid>
 				<Grid
 					item
@@ -104,11 +92,7 @@ const ChurchAdd = () => {
 					lg={2}
 					sx={{ marginRight: { xs: 0, lg: 4 } }}
 				>
-					<CustomFileUpload
-						formdata={formData}
-						setformdata={setFormData}
-					/>
-					{/* <UploadProgressbar file={formData.imagefile} /> */}
+					<FileUpload pic={currentImage} setPic={setCurrentImage} />
 				</Grid>
 				<Grid item xs={12} lg={8}>
 					<ChurchForm formdata={formData} setformdata={setFormData} />
@@ -149,7 +133,6 @@ const ChurchAdd = () => {
 				</Alert>
 			</Snackbar>
 		</STContainer>
-		// </Grid>
 	)
 }
 

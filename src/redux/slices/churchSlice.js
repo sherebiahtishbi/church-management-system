@@ -5,7 +5,7 @@ const churchSlice = createSlice({
 	initialState: {
 		churches: {},
 		processing: false,
-		error: false,
+		error: null,
 	},
 
 	reducers: {

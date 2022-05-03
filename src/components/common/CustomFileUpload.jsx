@@ -65,7 +65,7 @@ const ImageContainer = styled(Box)(({ theme }) => ({
 	borderRadius: 5,
 }))
 
-const CustomFileUpload = ({ pic, setPic }) => {
+const CustomFileUpload = ({ pic, setPic, setNewImagefile }) => {
 	console.log("CustomFileUpload rendered")
 	const [file, setFile] = useState(null)
 	const hiddenFileInput = useRef(null)
@@ -86,6 +86,7 @@ const CustomFileUpload = ({ pic, setPic }) => {
 	const handleChange = (e) => {
 		console.log(e.target.files[0])
 		setPic(URL.createObjectURL(e.target.files[0]))
+		setNewImagefile(e.target.files[0])
 	}
 
 	console.log(file)

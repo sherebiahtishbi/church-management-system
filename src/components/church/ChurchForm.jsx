@@ -136,7 +136,9 @@ const ChurchForm = ({ formdata, setformdata }) => {
 					}
 				>
 					{countries.map((country) => (
-						<MenuItem value={country.code}>{country.name}</MenuItem>
+						<MenuItem key={country.code} value={country.code}>
+							{country.name}
+						</MenuItem>
 					))}
 				</TextField>
 			</Grid>

@@ -23,6 +23,7 @@ import useApi from "../../hooks/useApi"
 import { FileUpload } from "../common/CustomFileUpload"
 import { menuOptions } from "../../dataobjects/churchmenu"
 import useFirebaseUpload from "../../hooks/useFirebaseUpload"
+import Titles from "../common/Titles"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -75,12 +76,12 @@ const ChurchEdit = () => {
 	const { churches, error } = useSelector((state) => state.church)
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState({})
-	const [currentImage, setCurrentImage] = useState(null)
+	const [imgLink, setImgLink] = useState(null)
+	const [imgFile, setImgFile] = useState({})
 	const [mode, setMode] = useState("add")
 
-	const { uploadFile, progress, url, uploaderror } = useFirebaseUpload(
-		formData.imagefile
-	)
+	const { uploadFile, progress, url, uploaderror } =
+		useFirebaseUpload(imgFile)
 
 	const params = useParams()
 	//if component is called with id as a parameter then
@@ -95,7 +96,8 @@ const ChurchEdit = () => {
 				}
 				if (church) {
 					setFormData({ ...church })
-					setCurrentImage(church?.churchimg)
+					setImgLink(church?.churchimg)
+					setImgFile({ name: church?.imgfilename })
 					setMode("edit")
 				}
 			}
@@ -105,13 +107,22 @@ const ChurchEdit = () => {
 
 	console.log(formData)
 
+	const uploadImage = async () => {
+		const imageurl = await uploadFile()
+		console.log(imageurl)
+		formData.churchimg = imageurl
+		formData.imgfilename = imgFile.name
+	}
+
 	const handleSave = async () => {
 		try {
 			console.log(formData)
 			console.log("Now will upload file")
-			const imageurl = await uploadFile()
-			console.log(imageurl)
-			formData.churchimg = imageurl
+			if (!formData.imgfilename && imgFile) {
+				await uploadImage()
+			} else if (imgFile && imgFile.name !== formData.imgfilename) {
+				await uploadImage()
+			}
 			await saveChurch(formData, api, dispatch)
 			navigate("/home")
 		} catch (err) {
@@ -123,27 +134,23 @@ const ChurchEdit = () => {
 		// <Grid container>
 		<STContainer>
 			<Grid container sx={{ display: "flex" }}>
-				<Grid item xs={12} sx={{ display: { xs: "flex", lg: "none" } }}>
+				<Grid
+					item
+					xs={12}
+					sx={{
+						display: { xs: "flex", lg: "none" },
+						justifyContent: { xs: "center" },
+					}}
+				>
 					<ChurchMenu />
 				</Grid>
 				<Grid item xs={12}>
-					<Typography
-						variant="h3"
-						color="GrayText"
-						textAlign="center"
-					>
-						Edit Church Information
-					</Typography>
-					<Typography
-						variant="body2"
-						color="GrayText"
-						pb={5}
-						textAlign="center"
-					>
-						Here you can edit the basic church details. Also you can
+					<Titles
+						title="Edit Church Information"
+						subtitle="Here you can edit the basic church details. Also you can
 						add or modify many other details like pastors, staff,
-						members, church events, facilitites and donations.
-					</Typography>
+						members, church events, facilitites and donations."
+					/>
 				</Grid>
 				<Grid
 					item
@@ -151,7 +158,11 @@ const ChurchEdit = () => {
 					lg={2}
 					sx={{ marginRight: { xs: 0, lg: 4 } }}
 				>
-					<FileUpload pic={currentImage} setPic={setCurrentImage} />
+					<FileUpload
+						pic={imgLink}
+						setPic={setImgLink}
+						setNewImagefile={setImgFile}
+					/>
 					<Divider />
 					<Box sx={{ display: { xs: "none", lg: "flex" } }}>
 						<ChurchMenu />

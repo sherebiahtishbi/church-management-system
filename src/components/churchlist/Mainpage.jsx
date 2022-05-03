@@ -12,6 +12,7 @@ const Container = styled("div")(({ theme }) => ({
 	justifyContent: "center",
 	paddingLeft: 25,
 	paddingRight: 25,
+	// marginBottom: 25,
 }))
 
 const InfoSection = styled("div")(({ theme }) => ({
@@ -45,7 +46,7 @@ const Mainpage = () => {
 	return (
 		<Container>
 			{churches.length > 0 ? (
-				<Box paddingTop={4}>
+				<Box paddingTop={4} paddingBottom={4} marginBottom={4}>
 					<InfoSection>
 						<Typography variant="h5" color="cms.textLight">
 							Below are the list of churches in your account which
