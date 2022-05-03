@@ -20,7 +20,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import ChurchForm from "./ChurchForm"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
-import CustomFileUpload from "../common/CustomFileUpload"
+import { FileUpload } from "../common/CustomFileUpload"
 import { menuOptions } from "../../dataobjects/churchmenu"
 import useFirebaseUpload from "../../hooks/useFirebaseUpload"
 
@@ -75,6 +75,7 @@ const ChurchEdit = () => {
 	const { churches, error } = useSelector((state) => state.church)
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState({})
+	const [currentImage, setCurrentImage] = useState(null)
 	const [mode, setMode] = useState("add")
 
 	const { uploadFile, progress, url, uploaderror } = useFirebaseUpload(
@@ -94,7 +95,7 @@ const ChurchEdit = () => {
 				}
 				if (church) {
 					setFormData({ ...church })
-
+					setCurrentImage(church?.churchimg)
 					setMode("edit")
 				}
 			}
@@ -150,10 +151,7 @@ const ChurchEdit = () => {
 					lg={2}
 					sx={{ marginRight: { xs: 0, lg: 4 } }}
 				>
-					<CustomFileUpload
-						formdata={formData}
-						setformdata={setFormData}
-					/>
+					<FileUpload pic={currentImage} setPic={setCurrentImage} />
 					<Divider />
 					<Box sx={{ display: { xs: "none", lg: "flex" } }}>
 						<ChurchMenu />

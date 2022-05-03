@@ -1,7 +1,7 @@
 import { CloudUpload } from "@mui/icons-material"
 import { Box, styled } from "@mui/material"
 import { grey } from "@mui/material/colors"
-import { useEffect, useRef, useState, memo } from "react"
+import { useEffect, useRef, useState, memo, useMemo } from "react"
 import empty from "../../images/empty.png"
 
 const UploadContainer = styled(Box)(({ theme, file, empty }) => ({
@@ -65,18 +65,19 @@ const ImageContainer = styled(Box)(({ theme }) => ({
 	borderRadius: 5,
 }))
 
-const CustomFileUpload = ({ formdata, setformdata }) => {
+const CustomFileUpload = ({ pic, setPic }) => {
 	console.log("CustomFileUpload rendered")
 	const [file, setFile] = useState(null)
 	const hiddenFileInput = useRef(null)
 
 	useEffect(() => {
-		if (formdata.churchimg) {
-			setFile(formdata.churchimg)
+		if (pic) {
+			console.log("useEffect()")
+			setFile(pic)
 		} else {
 			setFile(empty)
 		}
-	}, [formdata])
+	}, [pic])
 
 	const handleClick = () => {
 		hiddenFileInput.current.click()
@@ -84,13 +85,7 @@ const CustomFileUpload = ({ formdata, setformdata }) => {
 
 	const handleChange = (e) => {
 		console.log(e.target.files[0])
-		setFile(URL.createObjectURL(e.target.files[0]))
-		if (formdata) {
-			setformdata({
-				...formdata,
-				imagefile: e.target.files[0],
-			})
-		}
+		setPic(URL.createObjectURL(e.target.files[0]))
 	}
 
 	console.log(file)
@@ -119,3 +114,4 @@ const CustomFileUpload = ({ formdata, setformdata }) => {
 }
 
 export default CustomFileUpload
+export const FileUpload = memo(CustomFileUpload)
