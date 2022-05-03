@@ -24,7 +24,7 @@ const InfoSection = styled("div")(({ theme }) => ({
 }))
 
 const SubInfo = styled("div")(({ theme }) => ({
-	color: theme.palette.cms.textLight,
+	color: theme.palette.cms.text600,
 }))
 
 const Mainpage = () => {
@@ -48,7 +48,7 @@ const Mainpage = () => {
 			{churches.length > 0 ? (
 				<Box paddingTop={4} paddingBottom={4} marginBottom={4}>
 					<InfoSection>
-						<Typography variant="h5" color="cms.textLight">
+						<Typography variant="h5" color="cms.text600">
 							Below are the list of churches in your account which
 							you can manage.
 						</Typography>

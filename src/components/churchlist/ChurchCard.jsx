@@ -40,7 +40,7 @@ const ChurchCard = ({ church }) => {
 					title={church.churchname}
 					subheader={
 						church.startdate
-							? moment(church.startdate).format("MM/DD/YYYY")
+							? moment(church.startdate).format("DD MMMM, YYYY")
 							: ""
 					}
 				/>

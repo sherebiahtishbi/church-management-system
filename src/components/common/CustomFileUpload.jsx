@@ -63,6 +63,10 @@ const ImageContainer = styled(Box)(({ theme }) => ({
 	maxHeight: 350,
 	margin: "10px 0px",
 	borderRadius: 5,
+	border: "1px solid",
+	borderColor: theme.palette.cms.text300,
+	overflow: "hidden",
+	boxShadow: 15,
 }))
 
 const CustomFileUpload = ({ pic, setPic, setNewImagefile }) => {
@@ -104,11 +108,11 @@ const CustomFileUpload = ({ pic, setPic, setNewImagefile }) => {
 					onChange={handleChange}
 				/>
 				<UploadIcon />
-				{file && (
+				{/* {file && (
 					<SelectedFile>
 						{file?.name} | {Math.round(file?.size / 1000)}KB
 					</SelectedFile>
-				)}
+				)} */}
 			</UploadContainer>
 		</Box>
 	)
