@@ -10,7 +10,6 @@ import {
 import { styled, Typography } from "@mui/material"
 import Navbar from "../components/common/nav/Navbar"
 import STMenuItem from "../components/common/STMenuItem"
-import { alpha } from "@mui/material"
 import { Outlet } from "react-router-dom"
 
 const Container = styled("div")(({ theme }) => ({
@@ -36,7 +35,6 @@ const LeftBar = styled("div")(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "flex-start",
-	// backgroundColor: alpha(theme.palette.primary.main, 0.2),
 	paddingLeft: 20,
 	paddingTop: 20,
 }))

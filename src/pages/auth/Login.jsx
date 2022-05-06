@@ -4,14 +4,13 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 // import useLogin from "../../hooks/useLogin"
 import { loginUser } from "../../redux/actions/loginActions"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 // import useApi from "../../hooks/useApi"
 
 const Login = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState(false)
-	const status = useSelector((state) => state.auth.status)
 	const dispatch = useDispatch()
 	// const api = useApi()
 
@@ -22,7 +21,7 @@ const Login = () => {
 		if (username && password) {
 			console.log("Credentials available!")
 			try {
-				const res = await loginUser(username, password, dispatch)
+				await loginUser(username, password, dispatch)
 				console.log("Login successful!")
 				navigate("/home")
 			} catch (err) {

@@ -1,15 +1,18 @@
+/*
+Author     : Sherebiah Tisbi
+Written On : Friday 06,May 2022
+Objective  : This is the main App code file
+*/
 import { ThemeProvider } from "@mui/material/styles"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Login from "./pages/login/Login"
+import { Login, Logout } from "./pages/auth"
 import theme from "./theme/theme"
-import Register from "./components/accounts/Register"
+import Register from "./pages/account/Register"
 import ProtectedRoute from "./components/common/ProtectedRoute"
-import { ChurchAdd, ChurchEdit } from "./components/church"
+import { ChurchAdd, ChurchEdit, Mainpage } from "./pages/church"
 import Unauthorized from "./components/common/Unauthorized"
-import Logout from "./pages/Logout"
 import Pagenotfound from "./pages/Pagenotfound"
 // import Home from "./pages/Home"
-import Mainpage from "./components/churchlist/Mainpage"
 import { CssBaseline } from "@mui/material"
 
 import { HomeLayout } from "./components/layouts"

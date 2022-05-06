@@ -1,5 +1,5 @@
 //mui imports
-import { Alert, Button, Grid, Snackbar, Typography } from "@mui/material"
+import { Alert, Button, Grid, Snackbar } from "@mui/material"
 import { styled } from "@mui/system"
 
 //react imports
@@ -8,13 +8,13 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 //application imports
-import ChurchForm from "./ChurchForm"
+import { ChurchForm } from "../../components/church/index"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
-import { FileUpload } from "../common/CustomFileUpload"
+import { FileUpload } from "../../components/common/CustomFileUpload"
 // import UploadProgressbar from "../common/UploadProgressbar"
 import useFirebaseUpload from "../../hooks/useFirebaseUpload"
-import Titles from "../common/Titles"
+import Titles from "../../components/common/Titles"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -51,9 +51,7 @@ const ChurchAdd = () => {
 		createdby: userinfo.userid,
 	})
 
-	const { uploadFile, progress, url, uploaderror } = useFirebaseUpload(
-		formData.imagefile
-	)
+	const { uploadFile, progress } = useFirebaseUpload(formData.imagefile)
 
 	const handleSave = async () => {
 		try {

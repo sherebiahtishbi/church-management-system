@@ -3,7 +3,7 @@ import { styled } from "@mui/system"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getChurches } from "../../redux/actions/churchActions"
-import ChurchCard from "./ChurchCard"
+import { ChurchCard } from "../../components/church/index"
 import useApi from "../../hooks/useApi"
 
 const Container = styled("div")(({ theme }) => ({

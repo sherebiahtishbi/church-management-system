@@ -7,7 +7,6 @@ import {
 	ListItemIcon,
 	ListItemText,
 	MenuItem,
-	Typography,
 } from "@mui/material"
 import { styled } from "@mui/system"
 
@@ -17,13 +16,12 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
 //application imports
-import ChurchForm from "./ChurchForm"
+import { ChurchForm } from "../../components/church/index"
 import { saveChurch } from "../../redux/actions/churchActions"
 import useApi from "../../hooks/useApi"
-import { FileUpload } from "../common/CustomFileUpload"
+import { Titles, FileUpload } from "../../components/common"
 import { menuOptions } from "../../dataobjects/churchmenu"
 import useFirebaseUpload from "../../hooks/useFirebaseUpload"
-import Titles from "../common/Titles"
 
 const STContainer = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -72,16 +70,13 @@ const ChurchMenu = () => {
 const ChurchEdit = () => {
 	const navigate = useNavigate()
 	const api = useApi()
-	const userinfo = useSelector((state) => state.login.userinfo)
-	const { churches, error } = useSelector((state) => state.church)
+	const { churches } = useSelector((state) => state.church)
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState({})
 	const [imgLink, setImgLink] = useState(null)
 	const [imgFile, setImgFile] = useState({})
-	const [mode, setMode] = useState("add")
 
-	const { uploadFile, progress, url, uploaderror } =
-		useFirebaseUpload(imgFile)
+	const { uploadFile } = useFirebaseUpload(imgFile)
 
 	const params = useParams()
 	//if component is called with id as a parameter then
@@ -98,7 +93,6 @@ const ChurchEdit = () => {
 					setFormData({ ...church })
 					setImgLink(church?.churchimg)
 					setImgFile({ name: church?.imgfilename })
-					setMode("edit")
 				}
 			}
 		}
@@ -108,6 +102,7 @@ const ChurchEdit = () => {
 	console.log(formData)
 
 	const uploadImage = async () => {
+		console.log("Now will upload file")
 		const imageurl = await uploadFile()
 		console.log(imageurl)
 		formData.churchimg = imageurl
@@ -117,7 +112,8 @@ const ChurchEdit = () => {
 	const handleSave = async () => {
 		try {
 			console.log(formData)
-			console.log("Now will upload file")
+			console.log(imgFile)
+
 			if (!formData.imgfilename && imgFile) {
 				await uploadImage()
 			} else if (imgFile && imgFile.name !== formData.imgfilename) {
