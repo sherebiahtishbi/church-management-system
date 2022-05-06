@@ -22,6 +22,9 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Login />} />
+					<Route path="/logout" element={<Logout />} />
+					<Route path="/accounts" element={<Register />} />
+					<Route path="/unauthorized" element={<Unauthorized />} />
 					<Route
 						path="/home"
 						element={
@@ -39,10 +42,15 @@ function App() {
 							}
 						/>
 					</Route>
-					<Route path="/logout" element={<Logout />} />
-					<Route path="/unauthorized" element={<Unauthorized />} />
-					<Route path="/accounts" element={<Register />} />
-					<Route path="/churches" element={<ChurchLayout />}>
+
+					<Route
+						path="/churches"
+						element={
+							<ProtectedRoute>
+								<ChurchLayout />
+							</ProtectedRoute>
+						}
+					>
 						<Route
 							path="add"
 							element={

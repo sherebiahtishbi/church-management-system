@@ -43,11 +43,6 @@ const UploadIcon = styled(CloudUpload)(({ theme }) => ({
 	color: grey[500],
 }))
 
-const SelectedFile = styled("span")(({ theme }) => ({
-	fontSize: 14,
-	fontWeight: 300,
-}))
-
 const ImagePreview = styled("img")(({ theme }) => ({
 	width: "100%",
 	maxHeight: 300,
@@ -108,11 +103,6 @@ const CustomFileUpload = ({ pic, setPic, setNewImagefile }) => {
 					onChange={handleChange}
 				/>
 				<UploadIcon />
-				{/* {file && (
-					<SelectedFile>
-						{file?.name} | {Math.round(file?.size / 1000)}KB
-					</SelectedFile>
-				)} */}
 			</UploadContainer>
 		</Box>
 	)

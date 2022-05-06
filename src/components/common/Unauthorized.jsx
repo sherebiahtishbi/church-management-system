@@ -1,8 +1,21 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { logoutUser } from "../../redux/actions/loginActions"
 
 const Unauthorized = () => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		console.log("logout")
+		logoutUser(dispatch)
+	}, [])
+
+	const handleLogout = () => {
+		navigate("/")
+	}
 
 	return (
 		<Box sx={{ mt: { xs: 10, lg: 20 } }}>
@@ -14,13 +27,7 @@ const Unauthorized = () => {
 						</Typography>
 					</Grid>
 					<Grid item xs={12} md={12}>
-						<Button
-							onClick={() => {
-								navigate("/")
-							}}
-						>
-							Go to Login
-						</Button>
+						<Button onClick={handleLogout}>Go to Login</Button>
 					</Grid>
 				</Grid>
 			</Box>
