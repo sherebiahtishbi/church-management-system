@@ -17,9 +17,14 @@ export const loginUser = async (username, password, dispatch) => {
 			username: username,
 			password: password,
 		})
-		console.log(res.data)
-		localStorage.setItem("_cms_tk", JSON.stringify(res.data))
-		dispatch(loginSuccess(res.data.user))
+		console.log(res)
+		if (res?.status === 200) {
+			localStorage.setItem("_cms_tk", JSON.stringify(res.data))
+			dispatch(loginSuccess(res.data.user))
+		} else {
+			console.log("Failed!")
+			dispatch(loginFailure())
+		}
 	} catch (err) {
 		console.log(err)
 		dispatch(loginFailure())

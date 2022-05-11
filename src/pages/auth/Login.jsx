@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 // import useLogin from "../../hooks/useLogin"
 import { loginUser } from "../../redux/actions/loginActions"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 // import useApi from "../../hooks/useApi"
 
 const Login = () => {
@@ -12,6 +12,7 @@ const Login = () => {
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState(false)
 	const dispatch = useDispatch()
+	const logininfo = useSelector((state) => state.login)
 	// const api = useApi()
 
 	let navigate = useNavigate()
@@ -22,8 +23,15 @@ const Login = () => {
 			console.log("Credentials available!")
 			try {
 				await loginUser(username, password, dispatch)
-				console.log("Login successful!")
-				navigate("/home")
+
+				console.log(logininfo)
+				if (logininfo?.userinfo?.userid) {
+					console.log("Login successful!")
+					navigate("/home")
+				} else {
+					console.log("Login Failed!")
+					setError(true)
+				}
 			} catch (err) {
 				console.log(err)
 				setError(true)
@@ -57,6 +65,7 @@ const Login = () => {
 					<TextField
 						id="accountpwd"
 						label="Password"
+						type="password"
 						variant="standard"
 						value={password}
 						onChange={(e) => {

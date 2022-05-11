@@ -27,6 +27,7 @@ const loginSlice = createSlice({
 			state.processing = true
 		},
 		loginFailure: (state) => {
+			console.log("loginSlice.loginFailure()")
 			state.processing = false
 			state.error = true
 		},

@@ -8,23 +8,23 @@ import {
 } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { countries } from "../../dataobjects/countries"
-import axios from "axios"
+import { useApi } from "../../hooks"
+import { saveAccount } from "../../redux/actions/accountActions"
 
 const Register = () => {
-	const accountobject = {}
 	const navigate = useNavigate()
 	const [formData, setFormData] = useState({})
 	const [error, setError] = useState(true)
+	const api = useApi()
+	const dispatch = useDispatch()
 
 	const handleCreateAccount = async () => {
 		try {
-			const res = await axios.post(
-				"http://localhost:7501/accounts/save",
-				formData
-			)
+			setFormData({ ...formData, type: "owner" })
+			const res = await saveAccount(formData, api, dispatch)
 			if (res.data) {
-				setFormData(accountobject)
 				navigate("/")
 			}
 		} catch (err) {
@@ -36,7 +36,7 @@ const Register = () => {
 		<Box sx={{ mt: { xs: 10, lg: 20 } }}>
 			<Box m="auto" maxWidth={"lg"} p={5} boxShadow={3} borderRadius={2}>
 				<Grid item xs={12} lg={6}>
-					<Typography variant="h3" color="GrayText">
+					<Typography variant="h3" color="cms.text500">
 						New Account
 					</Typography>
 					<Typography variant="body2" color="GrayText">
@@ -217,7 +217,10 @@ const Register = () => {
 								fullWidth
 							>
 								{countries.map((country) => (
-									<MenuItem value={country.code}>
+									<MenuItem
+										key={country.code}
+										value={country.code}
+									>
 										{country.name}
 									</MenuItem>
 								))}
