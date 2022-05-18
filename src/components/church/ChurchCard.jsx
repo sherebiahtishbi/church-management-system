@@ -17,7 +17,8 @@ const ChurchCard = ({ church }) => {
 	const handleClick = () => {
 		church._id === 9999
 			? navigate("/churches/add")
-			: navigate(`/churches/edit/${church._id}`)
+			: navigate(`/churches/view/${church._id}`)
+		// : navigate(`/churches/edit/${church._id}`)
 	}
 
 	return (

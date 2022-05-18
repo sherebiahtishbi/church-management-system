@@ -24,11 +24,6 @@ export const menuOptions = [
 		icon: <People />,
 	},
 	{
-		id: 4,
-		text: "Basic Information",
-		icon: <FeaturedPlayListOutlined />,
-	},
-	{
 		id: 5,
 		text: "Events",
 		icon: <Event />,

@@ -13,7 +13,7 @@ import {
 	Typography,
 } from "@mui/material"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import userimg from "../../../images/anu_profile.jpg"
 import { logoutUser } from "../../../redux/actions/loginActions"
 import { useDispatch } from "react-redux"
@@ -66,6 +66,13 @@ const RightConrols = styled(Box)(({ theme }) => ({
 	alignItems: "center",
 }))
 
+const HomeLink = styled(Link)(({ theme }) => ({
+	display: "flex",
+	flexGrow: 1,
+	textDecoration: "none",
+	color: theme.palette.cms.text800,
+}))
+
 const Navbar = () => {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
@@ -89,12 +96,15 @@ const Navbar = () => {
 		<>
 			<AppBar position="static">
 				<Toolbar sx={{ height: 80 }}>
-					<WebTitle component="div" variant="h4">
-						Church Management System
-					</WebTitle>
-					<MobileTitle component="div" variant="h4">
-						CMS
-					</MobileTitle>
+					<HomeLink to="/home">
+						<WebTitle component="div" variant="h4">
+							Church Management System
+						</WebTitle>
+
+						<MobileTitle component="div" variant="h4">
+							CMS
+						</MobileTitle>
+					</HomeLink>
 					<RightConrols>
 						<NavbarMenu>
 							<NavbarMenuItem>About Us</NavbarMenuItem>

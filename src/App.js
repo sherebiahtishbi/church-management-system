@@ -9,7 +9,7 @@ import { Login, Logout } from "./pages/auth"
 import theme from "./theme/theme"
 import Register from "./pages/account/Register"
 import ProtectedRoute from "./components/common/ProtectedRoute"
-import { ChurchAdd, ChurchEdit, Mainpage } from "./pages/church"
+import { ChurchView, ChurchAdd, ChurchEdit, Mainpage } from "./pages/church"
 import Unauthorized from "./components/common/Unauthorized"
 import Pagenotfound from "./pages/Pagenotfound"
 // import Home from "./pages/Home"
@@ -54,6 +54,14 @@ function App() {
 							</ProtectedRoute>
 						}
 					>
+						<Route
+							path="view/:id"
+							element={
+								<ProtectedRoute>
+									<ChurchView />
+								</ProtectedRoute>
+							}
+						/>
 						<Route
 							path="add"
 							element={

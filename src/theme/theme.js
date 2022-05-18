@@ -20,6 +20,9 @@ const theme = createTheme({
 		},
 		mode: "light",
 		cms: {
+			text50: grey[50],
+			text100: grey[100],
+			text200: grey[200],
 			text300: grey[300],
 			text400: grey[400],
 			text500: grey[500],
